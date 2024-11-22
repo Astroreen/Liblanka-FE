@@ -1,0 +1,46 @@
+/* Linear gradient animation for background */
+@keyframes AnimatedGradient {
+    0% {
+        background-position: 0% 85%;
+    }
+
+    50% {
+        background-position: 100% 20%;
+    }
+
+    100% {
+        background-position: 0% 85%;
+    }
+}
+
+.bg-gradient-animation {
+    background-color: #fff;
+    background-size: 600% 600%;
+    animation-name: AnimatedGradient;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+/* Duration of animation */
+.animation-duration-15 {
+    animation-duration: 15s;
+}
+
+.animate-underline {
+    position: relative;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+.animate-underline::before {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: white;
+    transition: width 0.3s ease;
+}
+.animate-underline:hover::before {
+    width: 100%;
+}

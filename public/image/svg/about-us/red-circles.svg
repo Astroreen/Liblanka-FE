@@ -1,0 +1,9 @@
+<svg
+        xmlns="http://www.w3.org/2000/svg"
+        version="1.1">
+    <rect x="0" y="0"></rect>
+    <g fill="#fc4d87">
+        <circle r="145" cx="300" cy="500"></circle>
+        <circle r="64" cx="1000" cy="200"></circle>
+    </g>
+</svg>
