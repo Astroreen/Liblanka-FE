@@ -21,6 +21,8 @@ import {ProductSizeDto} from "../../../../dto/ProductSizeDto";
 import {ProductColorDto} from "../../../../dto/ProductColorDto";
 import {SplitButton} from "../../../../components/button/SplitButton";
 import MenuItem from "@mui/material/MenuItem";
+import {BASE_URL, ENDPOINTS} from "../../../../api/apiConfig";
+import axios from "axios";
 
 const enum ProductField {
     NAME,
@@ -39,7 +41,6 @@ const enum DialogType {
 const initialProductProps = {
     name: '',
     price: 0,
-    quantity: 0,
     size: [],
 }
 
@@ -68,7 +69,7 @@ export const ProductCreation: React.FC<ProductCreationProps> = ({types, sizes, c
                 }
                 break;
             case ProductField.PRICE:
-                values[index].price = event.target.value;
+                values[index].price = parseInt(event.target.value);
                 break;
             case ProductField.COLOR:
                 values[index].color = event.target.value;
@@ -140,6 +141,31 @@ export const ProductCreation: React.FC<ProductCreationProps> = ({types, sizes, c
     const handleDeleteProductRow = (id: number) => {
         let values: ProductDto[] = [...products];
         setProducts(values.filter((value, index) => index !== id));
+    }
+
+    const onSubmitProducts = async () => {
+        let FinalProducts: any[] = [];
+        products.forEach(product => {
+            product.size.forEach(size => {
+                FinalProducts.push({
+                    type: product.type,
+                    name: product.name,
+                    description: product.description,
+                    color: product.color,
+                    size: size.name,
+                    quantity: size.amount,
+                    price: product.price,
+                });
+            });
+        });
+
+        try {
+            const response = await axios.post(BASE_URL + ENDPOINTS.products, FinalProducts);
+            console.log(response);
+        } catch (err) {
+            console.log(err);
+        }
+
     }
 
     return (
@@ -350,10 +376,12 @@ export const ProductCreation: React.FC<ProductCreationProps> = ({types, sizes, c
                 </Box>
             ))}
             <Box display="flex" flexDirection="row" alignItems="flex-start" gap={2} mb={2}>
+                {/* ADD NEW PRODUCT BUTTON */}
                 <SplitButton prefix={<AddCircle/>} options={types.map(product => product.name)}
                              onClick={addProductRow}/>
+                {/* SUBMIT BUTTON */}
                 {products.length > 0 &&
-                    <Button type="submit" variant="contained" color="success">
+                    <Button type="submit" variant="contained" color="success" onClick={onSubmitProducts}>
                         <Send/> Create
                     </Button>
                 }
