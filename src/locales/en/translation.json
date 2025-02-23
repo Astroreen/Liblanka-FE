@@ -1,14 +1,19 @@
 {
   "common.name": "Liblanka",
   "common.slogan-end": "is your way to creating unique image",
+
   "page.login.title": "Login",
-  "page.main.title": "Main page",
   "page.products.title": "Products",
+  "page.admin.dashboard.title": "Dashboard",
+
   "page.header.home": "Home",
   "page.header.products": "Products",
   "page.header.about": "About",
   "page.header.contacts": "Contacts",
   "page.header.size": "Size",
+  "page.header.admin_panel": "Dashboard",
+
+  "page.main.title": "Main page",
   "page.main.about.headline": "About us",
   "page.main.about.about-us": "Liblanka is more than just a lingerie store. It is your guide to the world of luxury, comfort, and impeccable style. We offer our clients a wide range of women's and men's lingerie from leading global brands such as Acousma, Balaloum, Diorella, and Anna.",
   "page.main.about.why-us": "Why Liblanka?",

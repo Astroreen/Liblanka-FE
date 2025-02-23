@@ -6,7 +6,13 @@ import translationLT from "./locales/lt/translation.json";
 import translationRU from "./locales/ru/translation.json";
 import i18n from "i18next";
 import {initReactI18next} from "react-i18next";
-import {RoutePath} from "./routes/Routes";
+import {RoutePath} from "./routes/RoutePath";
+import {Products} from "./pages/products/Products";
+import {Login} from "./pages/login/Login";
+import {AuthProvider} from "./contexts/AuthContext";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import {Dashboard} from "./pages/admin/Dashboard";
+import {ProductManager} from "./pages/admin/products/ProductManager";
 
 const resources = {
     en: {
@@ -32,11 +38,26 @@ i18n.use(initReactI18next).init({
 function App() {
 
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path={RoutePath.HOME} element={<Home/>}/>
-            </Routes>
-        </BrowserRouter>
+        <AuthProvider>
+            <BrowserRouter>
+                <Routes>
+                    <Route path={RoutePath.HOME} element={<Home/>}/>
+                    <Route path={RoutePath.PRODUCTS} element={<Products/>}></Route>
+                    <Route path={RoutePath.LOGIN} element={<Login/>}></Route>
+
+                    <Route path={RoutePath.ADMIN_PANEL} element={
+                        <ProtectedRoute>
+                            <Dashboard/>
+                        </ProtectedRoute>
+                    }></Route>
+                    <Route path={RoutePath.PRODUCT_MANAGER} element={
+                        <ProtectedRoute>
+                            <ProductManager/>
+                        </ProtectedRoute>
+                    }></Route>
+                </Routes>
+            </BrowserRouter>
+        </AuthProvider>
     );
 }
 

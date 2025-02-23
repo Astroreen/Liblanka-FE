@@ -12,12 +12,14 @@ const root = ReactDOM.createRoot(
 );
 
 i18next.init({
-    interpolation: {escapeValue: false}, // React already does escaping
+    interpolation: {escapeValue: false}, // React already does escape
 });
 
 root.render(
     <React.StrictMode>
+        {/*Translator layer*/}
         <I18nextProvider i18n={i18next}>
+            {/*Header on all pages*/}
             <Helmet>
                 <meta charSet="UTF-8"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>

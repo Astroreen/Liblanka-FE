@@ -1,10 +1,14 @@
 import {useTranslation} from "react-i18next";
-import LanguageSwitcher from "../components/languageSwitcher/LanguageSwitcher";
-import {RoutePath} from "../routes/Routes";
+import LanguageSwitcher from "../../../components/languageSwitcher/LanguageSwitcher";
+import {RoutePath} from "../../../routes/RoutePath";
 import './HomeHeader.css'
+import {useAuthContext} from "../../../contexts/AuthContext";
+import {UserRole} from "../../../dto/UserRole";
 
 export const HomeHeader = () => {
     const {t} = useTranslation();
+    const {isAuthenticated, user} = useAuthContext();
+
 
     return (
         <section
@@ -27,14 +31,20 @@ export const HomeHeader = () => {
                             {t("page.header.products")}
                         </a>
 
-                        <a className="animate-underline flex-shrink-0" href="#about">
+                        <a className="animate-underline flex-shrink-0" href="/#about">
                             {t("page.header.about")}
                         </a>
 
                         <a
                             className="animate-underline"
-                            href="#contacts"
+                            href="/#contacts"
                         >{t("page.header.contacts")}</a>
+
+                        {isAuthenticated() && user?.role === UserRole.ADMIN &&
+                            <a className="animate-underline" href={RoutePath.ADMIN_PANEL}>
+                                {t("page.header.admin_panel")}
+                            </a>
+                        }
                     </div>
 
                     <LanguageSwitcher/>

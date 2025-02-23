@@ -1,7 +1,7 @@
 import React from "react";
-import {AboutUs} from "../../sections/AboutUs";
-import {Contacts} from "../../sections/Contacts";
-import {HomeHeader} from "../../sections/HomeHeader";
+import {AboutUs} from "./sections/AboutUs";
+import {Contacts} from "./sections/Contacts";
+import {HomeHeader} from "./sections/HomeHeader";
 import {Helmet} from 'react-helmet'
 import {useTranslation} from "react-i18next";
 

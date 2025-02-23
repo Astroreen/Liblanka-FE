@@ -1,5 +1,5 @@
 import {useTranslation} from "react-i18next";
-import {Constants} from "../Constants";
+import {Constants} from "../../../Constants";
 
 export const Contacts = () => {
     const { t } = useTranslation();

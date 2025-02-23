@@ -1,14 +1,19 @@
 {
   "common.name": "Liblanka",
   "common.slogan-end": "tai j\u016Bs\u0173 kelias \u012F unikalaus \u012Fvaizd\u017Eio k\u016Brim\u0105",
+
   "page.login.title": "Prisijungti",
-  "page.main.title": "Pagr. puslapis",
   "page.products.title": "Produktai",
+  "page.admin.dashboard.title": "Prietaisų skydelis",
+
   "page.header.home": "Namo",
   "page.header.products": "Produktai",
   "page.header.about": "Apie",
   "page.header.contacts": "Kontaktai",
   "page.header.size": "Dydis",
+  "page.header.admin_panel": "Prietaisų skydelis",
+
+  "page.main.title": "Pagr. puslapis",
   "page.main.about.headline": "Apie mus",
   "page.main.about.about-us": "Liblanka \u2013 tai ne tik apatini\u0173 drabu\u017Ei\u0173 parduotuv\u0117. Tai J\u016Bs\u0173 vadovas \u012F prabangos, komforto ir nepriekai\u0161tingo stiliaus pasaul\u012F. Si\u016Blome savo klientams plat\u0173 moteri\u0161k\u0173 ir vyri\u0161k\u0173 apatini\u0173 drabu\u017Ei\u0173 asortiment\u0105 i\u0161 \u017Einom\u0173 pasaulyje prek\u0117s \u017Eenkl\u0173, toki\u0173 kaip Acousma, Balaloum, Diorella ir Anna.",
   "page.main.about.why-us": "Kod\u0117l Liblanka?",

@@ -1,5 +1,7 @@
-export function createCookie(key: string, value: string, secure: boolean): void{
-    document.cookie = `${key}=${value}; SameSite=Lax; ${secure ? "Secure" : ""}`;
+import {CookieSiteType} from "./CookieSite";
+
+export function createCookie(key: string, value: string, secure: boolean, sameSite: CookieSiteType): void{
+    document.cookie = `${key}=${value}; SameSite=${sameSite}; ${secure ? "Secure;" : ""}`;
 }
 
 /**
