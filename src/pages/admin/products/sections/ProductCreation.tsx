@@ -10,8 +10,8 @@ import {
     InputAdornment,
     InputLabel,
     Paper,
-    Select,
-    TextField,
+    Select, SelectChangeEvent,
+    TextField, Typography,
 } from "@mui/material";
 import {styled} from '@mui/material/styles';
 import {AddCircle, Circle, CloudUpload, Delete, Send} from "@mui/icons-material";
@@ -45,15 +45,27 @@ const initialProductProps = {
 }
 
 export interface ProductCreationProps {
+    header: string;
     types: ProductTypeDto[];
     sizes: ProductSizeDto[];
     colors: ProductColorDto[];
 }
 
-export const ProductCreation: React.FC<ProductCreationProps> = ({types, sizes, colors}) => {
+export const ProductCreation: React.FC<ProductCreationProps> = ({header, types, sizes, colors}) => {
     const [products, setProducts] = useState<ProductDto[]>([]);
     const [openDescDialogs, setOpenDescDialogs] = React.useState<boolean[]>([]);
     const [openSizeDialogs, setOpenSizeDialogs] = React.useState<boolean[]>([]);
+
+    const VisuallyHiddenInput = styled('input')({
+        clipPath: 'inset(50%)',
+        height: 1,
+        overflow: 'hidden',
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        whiteSpace: 'nowrap',
+        width: 1,
+    });
 
     const handleChange = (index: number, field: ProductField) => (event: { target: { value: any; }; }) => {
         const values: ProductDto[] = [...products];
@@ -84,7 +96,7 @@ export const ProductCreation: React.FC<ProductCreationProps> = ({types, sizes, c
         setProducts(values);
     };
 
-    const handleOpenDialog = (dialog: DialogType, index: number) => {
+    function handleOpenDialog (dialog: DialogType, index: number) {
         if (dialog === DialogType.DESCRIPTION) {
             setOpenDescDialogs(prev => {
                 const dialogs = [...prev];
@@ -98,9 +110,9 @@ export const ProductCreation: React.FC<ProductCreationProps> = ({types, sizes, c
                 return dialogs;
             });
         }
-    };
+    }
 
-    const handleCloseDialog = (dialog: DialogType, index: number, reason?: string) => {
+    function handleCloseDialog (dialog: DialogType, index: number, reason?: string) {
         if (reason && reason === "backdropClick") return;
         if (dialog === DialogType.DESCRIPTION) {
             setOpenDescDialogs(prev => {
@@ -115,35 +127,23 @@ export const ProductCreation: React.FC<ProductCreationProps> = ({types, sizes, c
                 return dialogs;
             });
         }
-    };
+    }
 
-    const VisuallyHiddenInput = styled('input')({
-        clipPath: 'inset(50%)',
-        height: 1,
-        overflow: 'hidden',
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        whiteSpace: 'nowrap',
-        width: 1,
-    });
-
-    const addProductRow = (productType: string) => {
+    function addProductRow (productType: string) {
         const product: ProductDto = {
             ...initialProductProps,
             type: {name: productType} as ProductTypeDto,
             color: colors[0]
         };
         setProducts([...products, product]);
-        console.log(products)
-    };
+    }
 
-    const handleDeleteProductRow = (id: number) => {
+    function handleDeleteProductRow (id: number)  {
         let values: ProductDto[] = [...products];
         setProducts(values.filter((value, index) => index !== id));
     }
 
-    const onSubmitProducts = async () => {
+    async function onSubmitProducts () {
         let FinalProducts: any[] = [];
         products.forEach(product => {
             product.size.forEach(size => {
@@ -168,17 +168,53 @@ export const ProductCreation: React.FC<ProductCreationProps> = ({types, sizes, c
 
     }
 
+    function handlePickColor (event: SelectChangeEvent<string>, index: number) {
+            const selectedColor = colors.find(color => color.name === event.target.value);
+            if (selectedColor) {
+                handleChange(index, ProductField.COLOR)({target: {value: selectedColor}});
+            }
+    }
+
+    function handleSizeAmountChange(event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, sizeIndex: number, index: number) {
+        const selectedSize = sizes.find(value => value.name === products[index]?.size[sizeIndex]?.name);
+        if (selectedSize) {
+            const updatedProducts = [...products];
+            updatedProducts[index].size[sizeIndex].amount = Number(event.target.value)
+            setProducts(updatedProducts);
+        }
+    }
+
+    function handleDeleteSizeRow(sizeIndex: number, index: number) {
+        let updatedProducts= [...products];
+        updatedProducts[index].size = updatedProducts[index].size.filter(value => value.name !== products[index].size[sizeIndex]?.name)
+        setProducts(updatedProducts);
+    }
+
+    function handleCreateSizeRow(value: string, index: number) {
+        const sizeDto = {name: value, amount: 0} as ProductSizeDto;
+        const newProducts = [...products];
+        if (newProducts[index]?.size?.find(value => value.name === sizeDto.name)) return;
+        newProducts[index]?.size?.push(sizeDto);
+        setProducts(newProducts);
+    }
     return (
-        <Paper elevation={3} className="p-20 mt-20">
+        <Paper elevation={3} className="px-14 pb-14 pt-5 mx-10 my-20">
+            <Typography variant="h4" className="mb-10">
+                {header}
+            </Typography>
+
             {products.map((product: ProductDto, index) => (
                 <Box
                     key={product.type.name + `${index}`}
-                    display="flex"
-                    flexDirection="row"
-                    alignItems="center"
-                    justifyContent={"flex-start"}
-                    mb={2}
-                    gap={1}>
+                    sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "flex-start",
+                        mb: 2,
+                        gap: 1
+                    }}
+                >
                     {/* TYPE */}
                     <TextField
                         label="Type"
@@ -205,12 +241,7 @@ export const ProductCreation: React.FC<ProductCreationProps> = ({types, sizes, c
                         <Select
                             value={product.color ? product.color.name : ""}
                             label="Color"
-                            onChange={(event) => {
-                                const selectedColor = colors.find(color => color.name === event.target.value);
-                                if (selectedColor) {
-                                    handleChange(index, ProductField.COLOR)({target: {value: selectedColor}});
-                                }
-                            }}
+                            onChange={(event) => handlePickColor(event, index)}
                         >
                             {
                                 colors.map((color) => (
@@ -250,7 +281,7 @@ export const ProductCreation: React.FC<ProductCreationProps> = ({types, sizes, c
                     <Dialog
                         disableEscapeKeyDown
                         open={openSizeDialogs[index] || false}
-                        onClose={(event, reason) => handleCloseDialog(DialogType.SIZE, index, reason)}
+                        onClose={(_event, reason) => handleCloseDialog(DialogType.SIZE, index, reason)}
                         maxWidth={"sm"}
                         fullWidth
                     >
@@ -282,23 +313,12 @@ export const ProductCreation: React.FC<ProductCreationProps> = ({types, sizes, c
                                             type="number"
                                             placeholder="0"
                                             defaultValue={products[index]?.size[sizeIndex]?.amount}
-                                            onChange={(event) => {
-                                                const selectedSize = sizes.find(value => value.name === products[index]?.size[sizeIndex]?.name);
-                                                if (selectedSize) {
-                                                    const updatedProducts = [...products];
-                                                    updatedProducts[index].size[sizeIndex].amount = Number(event.target.value)
-                                                    setProducts(updatedProducts);
-                                                }
-                                            }}
+                                            onChange={(event) => handleSizeAmountChange(event, sizeIndex, index)}
 
                                         />
 
                                         {/* SIZE DELETE BUTTON */}
-                                        <Button onClick={() => {
-                                            let updatedProducts= [...products];
-                                            updatedProducts[index].size = updatedProducts[index].size.filter(value => value.name !== products[index].size[sizeIndex]?.name)
-                                            setProducts(updatedProducts);
-                                        }}>
+                                        <Button onClick={() => handleDeleteSizeRow(sizeIndex, index)}>
                                             <Delete color={"error"}/>
                                         </Button>
                                     </Box>
@@ -307,13 +327,7 @@ export const ProductCreation: React.FC<ProductCreationProps> = ({types, sizes, c
                             <SplitButton
                                 prefix={<AddCircle/>}
                                 options={sizes.map(value => value.name)}
-                                onClick={(value: string): void => {
-                                    const sizeDto = {name: value, amount: 0} as ProductSizeDto;
-                                    const newProducts = [...products];
-                                    if (newProducts[index]?.size?.find(value => value.name === sizeDto.name)) return;
-                                    newProducts[index]?.size?.push(sizeDto);
-                                    setProducts(newProducts);
-                                }}
+                                onClick={(value: string) => handleCreateSizeRow(value, index)}
                             />
                         </DialogContent>
                         <DialogActions>
