@@ -11,7 +11,7 @@ import {
     Typography
 } from "@mui/material";
 import {ProductTypeDto} from "../../../../dto/ProductTypeDto";
-import {AddCircle, Delete} from "@mui/icons-material";
+import {AddCircle, Delete, Send} from "@mui/icons-material";
 
 export interface ProductTypeCreationProps {
     header: string;
@@ -21,6 +21,7 @@ export interface ProductTypeCreationProps {
 export const ProductTypeCreation: React.FC<ProductTypeCreationProps> = ({header, types}) => {
 
     const [productTypes, setProductTypes] = React.useState<ProductTypeDto[]>(types);
+    const [submitTypes, setSubmitTypes] = React.useState<ProductTypeDto[]>([]);
     const [dialog, setDialog] = React.useState(false);
     const [possibleName, setPossibleName] = React.useState("");
 
@@ -33,25 +34,43 @@ export const ProductTypeCreation: React.FC<ProductTypeCreationProps> = ({header,
         setDialog(false);
     }
 
-    function handleDeleteProductType(index: number) {
+    function handleDeleteProductType(type: ProductTypeDto) {
         const editedTypes = [...productTypes];
-        //remember type to then delete in db using const typeToDelete = editedTypes[index];
-
-        setProductTypes(editedTypes.filter((_el, elIndex) => elIndex !== index));
 
         //post to server to delete type
+        //if all successful:
+        setProductTypes(editedTypes.filter((el) => el !== type));
+        setSubmitTypes(editedTypes.filter((el) => el !== type));
     }
 
     function handleAddNewProductType() {
-        const editedTypes = [...productTypes, {id: undefined, name: possibleName} as ProductTypeDto];
-        setProductTypes(editedTypes);
-        handleCloseDialog(undefined);
+        //not empty strings
+        if(possibleName === "") return;
+        //do not allow duplicates
+        if(productTypes.some(type => type.name === possibleName)) return;
+        if(submitTypes.some(type => type.name === possibleName)) return;
 
-        //post method to server to create new type
+        const type = {id: undefined, name: possibleName} as ProductTypeDto;
+
+        setProductTypes([...productTypes, type]);
+        setSubmitTypes([...submitTypes, type]);
+        setPossibleName("");
+
+        handleCloseDialog(undefined);
     }
 
     function handleProductTypeNameChange(event: React.ChangeEvent<HTMLInputElement>) {
         setPossibleName(event.target.value);
+    }
+
+    function onSubmitProductTypes() {
+        //send data to server
+
+        //clear array
+        console.log(submitTypes)
+        setSubmitTypes([]);
+
+        //reload page
     }
 
     return (
@@ -91,7 +110,7 @@ export const ProductTypeCreation: React.FC<ProductTypeCreationProps> = ({header,
                         />
 
                         {/* DELETE BUTTON */}
-                        <Button onClick={() => handleDeleteProductType(index)}>
+                        <Button onClick={() => handleDeleteProductType(type)}>
                             <Delete color={"error"}/>
                         </Button>
                     </Box>
@@ -118,9 +137,26 @@ export const ProductTypeCreation: React.FC<ProductTypeCreationProps> = ({header,
                     </DialogActions>
                 </Dialog>
 
-                <Button  variant="contained" color="success" onClick={handleOpenDialog}>
-                    <AddCircle/> Create
-                </Button>
+                <Box
+                    sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: 2
+                    }}
+                >
+                    {/* CREATE BUTTON */}
+                    <Button  variant="contained" color="primary" onClick={handleOpenDialog}>
+                        <AddCircle/> Add New Type
+                    </Button>
+
+                    {/* SUBMIT BUTTON */}
+                    {submitTypes.length > 0 &&
+                        <Button type="submit" variant="contained" color="success" onClick={onSubmitProductTypes}>
+                            <Send/> Create
+                        </Button>
+                    }
+                </Box>
+
             </Box>
 
         </Paper>
