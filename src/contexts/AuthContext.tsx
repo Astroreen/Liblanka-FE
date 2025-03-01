@@ -1,7 +1,7 @@
 import React, {createContext, ReactNode, useContext, useEffect, useState,} from "react";
 import axios from "axios";
 import {BASE_URL, ENDPOINTS} from "../api/apiConfig";
-import {createCookie, deleteCookie, getCookie} from "../utils/cookie/CookieManager";
+import {createCookie, createTemporaryCookie, deleteCookie, getCookie} from "../utils/cookie/CookieManager";
 import {UserDto} from "../dto/UserDto";
 import {CookieSiteType} from "../utils/cookie/CookieSite";
 
@@ -69,7 +69,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     const handleNewToken = (newToken: string) => {
         setAccessToken(newToken);
-        createCookie("token", newToken, true, CookieSiteType.LAX);
+        createTemporaryCookie("token", newToken, true, CookieSiteType.LAX,1);
     };
 
     const login = async (loginRequest: LoginProps) => {
@@ -81,10 +81,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             setAccessToken(data.token);
             //we will add cookie with user token if it is not set up yet
             //more about cookies in browser: https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie
-            if (!getCookie("token")) createCookie("token", data.token, true, CookieSiteType.LAX);
+            if (!getCookie("token")) createTemporaryCookie("token", data.token, true, CookieSiteType.LAX, 1);
             fetchUser(data.token);
         } catch (err) {
-            console.log(err);
+            console.error("Error creating token", err);
         }
     };
 

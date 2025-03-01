@@ -4,6 +4,12 @@ export function createCookie(key: string, value: string, secure: boolean, sameSi
     document.cookie = `${key}=${value}; SameSite=${sameSite}; ${secure ? "Secure;" : ""}`;
 }
 
+export function createTemporaryCookie(key: string, value: string, secure: boolean, sameSite: CookieSiteType, expireHours: number): void{
+    const date = new Date();
+    date.setHours(date.getHours() + expireHours);
+    document.cookie = `${key}=${value}; SameSite=${sameSite}; expires=${date.toUTCString()}; ${secure ? "Secure;" : ""}`;
+}
+
 /**
  * Find cookie from string using regex. <br/>
  * Cookie string looks like this: "param1=value1; token=...; param2=value2; "
