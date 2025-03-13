@@ -7,6 +7,8 @@ import {
     DialogContent,
     DialogTitle,
     Paper,
+    Select,
+    SelectChangeEvent,
     TextField,
     Typography
 } from "@mui/material";
@@ -14,6 +16,7 @@ import {ProductTypeDto} from "../../../../dto/ProductTypeDto";
 import {AddCircle, Delete, Send} from "@mui/icons-material";
 import {BASE_URL, ENDPOINTS} from "../../../../api/apiConfig";
 import {useProtectedAxios} from "../../../../hooks/useProtectedAxios";
+import MenuItem from "@mui/material/MenuItem";
 
 export interface ProductTypeCreationProps {
     header: string;
@@ -25,6 +28,8 @@ export const ProductTypeCreation: React.FC<ProductTypeCreationProps> = ({header,
     const [productTypes, setProductTypes] = React.useState<ProductTypeDto[]>(types);
     const [submitTypes, setSubmitTypes] = React.useState<string[]>([]);
     const [dialog, setDialog] = React.useState(false);
+    const [removeDialog, setRemoveDialog] = React.useState(false);
+    const [removeType, setRemoveType] = React.useState<ProductTypeDto>(types[0]);
     const [possibleName, setPossibleName] = React.useState("");
 
     function handleOpenDialog() {
@@ -32,13 +37,24 @@ export const ProductTypeCreation: React.FC<ProductTypeCreationProps> = ({header,
     }
 
     function handleCloseDialog(reason: "backdropClick" | "escapeKeyDown" | undefined) {
-        if(reason && reason === "backdropClick") return;
+        if (reason && reason === "backdropClick") return;
         setDialog(false);
+        setRemoveDialog(false);
+        setPossibleName("");
     }
 
-    function handleDeleteProductType(type: ProductTypeDto) {
+    async function handleDeleteProductType(type: ProductTypeDto, change: string) {
+        handleCloseDialog(undefined);
+        setPossibleName("");
 
-        //post to server to delete type
+        //post to server to delete type and change to another
+        try {
+            await protectedAxios.delete(BASE_URL + ENDPOINTS.product_types + `?delete=${type.name}&replace=${change}`);
+        } catch (err) {
+            console.error("Could not delete product type:", err);
+            return;
+        }
+
         //if all successful:
         setProductTypes([...productTypes].filter((el) => el !== type));
         setSubmitTypes([...submitTypes].filter((el) => el !== type.name));
@@ -46,10 +62,10 @@ export const ProductTypeCreation: React.FC<ProductTypeCreationProps> = ({header,
 
     function handleAddNewProductType() {
         //not empty strings
-        if(possibleName === "") return;
+        if (possibleName === "") return;
         //do not allow duplicates
-        if(productTypes.some(type => type.name === possibleName)) return;
-        if(submitTypes.some(name => name === possibleName)) return;
+        if (productTypes.some(type => type.name === possibleName)) return;
+        if (submitTypes.some(name => name === possibleName)) return;
 
         const type = {id: undefined, name: possibleName} as ProductTypeDto;
 
@@ -58,6 +74,10 @@ export const ProductTypeCreation: React.FC<ProductTypeCreationProps> = ({header,
         setPossibleName("");
 
         handleCloseDialog(undefined);
+    }
+
+    function handleProductTypeNameSelect(event: SelectChangeEvent){
+        setPossibleName(event.target.value);
     }
 
     function handleProductTypeNameChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -92,32 +112,66 @@ export const ProductTypeCreation: React.FC<ProductTypeCreationProps> = ({header,
                     justifyContent: "flex-start",
                     gap: 2
                 }}>
-                {productTypes.map((type, index) => (
-                    <Box
-                        key={`${type.name}` + index}
-                        sx={{
-                            display: "flex",
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "flex-start",
-                            mb: 2,
-                            gap: 1
-                        }}
-                    >
-                        <TextField
-                            variant="standard"
-                            defaultValue={type.name}
-                            slotProps={{
-                                input: {
-                                    readOnly: true,
-                                },
+                {productTypes.map((type) => (
+                    <Box key={`${type.name}`}>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "flex-start",
+                                mb: 2,
+                                gap: 1
                             }}
-                        />
+                        >
+                            <TextField
+                                variant="standard"
+                                defaultValue={type.name}
+                                slotProps={{
+                                    input: {
+                                        readOnly: true,
+                                    },
+                                }}
+                            />
 
-                        {/* DELETE BUTTON */}
-                        <Button onClick={() => handleDeleteProductType(type)}>
-                            <Delete color={"error"}/>
-                        </Button>
+                            {/* DELETE BUTTON */}
+                            <Button onClick={() =>
+                            {
+                                setRemoveDialog(true);
+                                setRemoveType(type);
+                            }}>
+                                <Delete color={"error"}/>
+                            </Button>
+                        </Box>
+
+                        <Dialog
+                            disableEscapeKeyDown
+                            open={removeDialog || false}
+                            onClose={(event, reason) => handleCloseDialog(reason)}
+                            maxWidth={"sm"}
+                            fullWidth
+                        >
+                            <DialogTitle>Change Product Type</DialogTitle>
+                            <DialogContent>
+                                    <Select
+                                        label="Change this type to"
+                                        value={possibleName}
+                                        onChange={handleProductTypeNameSelect}
+                                    >
+                                        {
+                                            productTypes
+                                                .filter((el) => el !== removeType)
+                                                .map((sel) => (
+                                                    <MenuItem value={sel.name} key={`${sel.name}`}>{sel.name}</MenuItem>
+                                                ))
+                                        }
+                                    </Select>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={() => handleDeleteProductType(removeType, possibleName)}>Remove</Button>
+                                <Button onClick={() => handleCloseDialog(undefined)}>Close</Button>
+                            </DialogActions>
+                        </Dialog>
                     </Box>
                 ))}
 
@@ -137,7 +191,7 @@ export const ProductTypeCreation: React.FC<ProductTypeCreationProps> = ({header,
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={() => handleAddNewProductType()}>Add</Button>
+                        <Button onClick={handleAddNewProductType}>Add</Button>
                         <Button onClick={() => handleCloseDialog(undefined)}>Close</Button>
                     </DialogActions>
                 </Dialog>
@@ -150,7 +204,10 @@ export const ProductTypeCreation: React.FC<ProductTypeCreationProps> = ({header,
                     }}
                 >
                     {/* CREATE BUTTON */}
-                    <Button  variant="contained" color="primary" onClick={handleOpenDialog}>
+                    <Button variant="contained" color="primary" onClick={() => {
+                        setRemoveDialog(false);
+                        handleOpenDialog();
+                    }}>
                         <AddCircle/> Add New Type
                     </Button>
 
