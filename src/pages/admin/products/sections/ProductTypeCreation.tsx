@@ -12,6 +12,8 @@ import {
 } from "@mui/material";
 import {ProductTypeDto} from "../../../../dto/ProductTypeDto";
 import {AddCircle, Delete, Send} from "@mui/icons-material";
+import {BASE_URL, ENDPOINTS} from "../../../../api/apiConfig";
+import {useProtectedAxios} from "../../../../hooks/useProtectedAxios";
 
 export interface ProductTypeCreationProps {
     header: string;
@@ -19,9 +21,9 @@ export interface ProductTypeCreationProps {
 }
 
 export const ProductTypeCreation: React.FC<ProductTypeCreationProps> = ({header, types}) => {
-
+    const protectedAxios = useProtectedAxios();
     const [productTypes, setProductTypes] = React.useState<ProductTypeDto[]>(types);
-    const [submitTypes, setSubmitTypes] = React.useState<ProductTypeDto[]>([]);
+    const [submitTypes, setSubmitTypes] = React.useState<string[]>([]);
     const [dialog, setDialog] = React.useState(false);
     const [possibleName, setPossibleName] = React.useState("");
 
@@ -35,12 +37,11 @@ export const ProductTypeCreation: React.FC<ProductTypeCreationProps> = ({header,
     }
 
     function handleDeleteProductType(type: ProductTypeDto) {
-        const editedTypes = [...productTypes];
 
         //post to server to delete type
         //if all successful:
-        setProductTypes(editedTypes.filter((el) => el !== type));
-        setSubmitTypes(editedTypes.filter((el) => el !== type));
+        setProductTypes([...productTypes].filter((el) => el !== type));
+        setSubmitTypes([...submitTypes].filter((el) => el !== type.name));
     }
 
     function handleAddNewProductType() {
@@ -48,12 +49,12 @@ export const ProductTypeCreation: React.FC<ProductTypeCreationProps> = ({header,
         if(possibleName === "") return;
         //do not allow duplicates
         if(productTypes.some(type => type.name === possibleName)) return;
-        if(submitTypes.some(type => type.name === possibleName)) return;
+        if(submitTypes.some(name => name === possibleName)) return;
 
         const type = {id: undefined, name: possibleName} as ProductTypeDto;
 
         setProductTypes([...productTypes, type]);
-        setSubmitTypes([...submitTypes, type]);
+        setSubmitTypes([...submitTypes, type.name]);
         setPossibleName("");
 
         handleCloseDialog(undefined);
@@ -63,14 +64,18 @@ export const ProductTypeCreation: React.FC<ProductTypeCreationProps> = ({header,
         setPossibleName(event.target.value);
     }
 
-    function onSubmitProductTypes() {
+    async function onSubmitProductTypes() {
         //send data to server
+        try {
+            await protectedAxios.post(BASE_URL + ENDPOINTS.product_types, submitTypes);
+        } catch (err) {
+            console.error("Error posting product types", err);
+        }
 
         //clear array
-        console.log(submitTypes)
         setSubmitTypes([]);
 
-        //reload page
+        //reload page?
     }
 
     return (

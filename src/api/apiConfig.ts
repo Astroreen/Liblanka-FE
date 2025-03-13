@@ -7,5 +7,6 @@ export const BASE_URL = isDevelopment
 export const ENDPOINTS = {
     login: "/auth/login",
     products: "/storage/products",
+    product_types: "/storage/products/types",
     userDetails: "/user/details",
 };

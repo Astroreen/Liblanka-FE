@@ -29,7 +29,7 @@ const useFetch = (
       }
     };
     getData();
-  }, []);
+  }, [endpoint, params, protectedAxios]);
 
   return [data, loading, error];
 };
