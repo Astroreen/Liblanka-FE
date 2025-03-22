@@ -12,24 +12,24 @@ import {
     TextField,
     Typography
 } from "@mui/material";
-import {ProductTypeDto} from "../../../../dto/ProductTypeDto";
 import {AddCircle, Delete, Send} from "@mui/icons-material";
 import {BASE_URL, ENDPOINTS} from "../../../../api/apiConfig";
 import {useProtectedAxios} from "../../../../hooks/useProtectedAxios";
 import MenuItem from "@mui/material/MenuItem";
+import {ProductSizeDto} from "../../../../dto/ProductSizeDto";
 
-export interface ProductTypeCreationProps {
+export interface ProductSizeCreationProps {
     header: string;
-    types: ProductTypeDto[];
+    sizes: ProductSizeDto[];
 }
 
-export const ProductTypeCreation: React.FC<ProductTypeCreationProps> = ({header, types}) => {
+export const ProductSizeCreation: React.FC<ProductSizeCreationProps> = ({header, sizes}) => {
     const protectedAxios = useProtectedAxios();
-    const [productTypes, setProductTypes] = React.useState<ProductTypeDto[]>(types);
-    const [submitTypes, setSubmitTypes] = React.useState<string[]>([]);
+    const [productSizes, setProductSizes] = React.useState<ProductSizeDto[]>(sizes);
+    const [submitSizes, setSubmitSizes] = React.useState<string[]>([]);
     const [dialog, setDialog] = React.useState(false);
     const [removeDialog, setRemoveDialog] = React.useState(false);
-    const [removeType, setRemoveType] = React.useState<ProductTypeDto>(types[0]);
+    const [removeSize, setRemoveSize] = React.useState<ProductSizeDto>(sizes[0]);
     const [possibleName, setPossibleName] = React.useState("");
 
     function handleOpenDialog() {
@@ -43,57 +43,57 @@ export const ProductTypeCreation: React.FC<ProductTypeCreationProps> = ({header,
         setPossibleName("");
     }
 
-    async function handleDeleteProductType(type: ProductTypeDto, change: string) {
+    async function handleDeleteProductType(type: ProductSizeDto, change: string) {
         handleCloseDialog(undefined);
         setPossibleName("");
 
         //post to server to delete type and change to another
         try {
-            await protectedAxios.delete(BASE_URL + ENDPOINTS.product_types + `?delete=${type?.name}&replace=${change}`);
+            await protectedAxios.delete(BASE_URL + ENDPOINTS.product_sizes + `?delete=${type?.name}&replace=${change}`);
         } catch (err) {
-            console.error("Could not delete product type:", err);
+            console.error("Could not delete product size:", err);
             return;
         }
 
         //if all successful:
-        setProductTypes([...productTypes].filter((el) => el !== type));
-        setSubmitTypes([...submitTypes].filter((el) => el !== type.name));
+        setProductSizes([...productSizes].filter((el) => el !== type));
+        setSubmitSizes([...submitSizes].filter((el) => el !== type.name));
     }
 
     function handleAddNewProductType() {
         //not empty strings
         if (possibleName === "") return;
         //do not allow duplicates
-        if (productTypes.some(type => type.name === possibleName)) return;
-        if (submitTypes.some(name => name === possibleName)) return;
+        if (productSizes.some(type => type.name === possibleName)) return;
+        if (submitSizes.some(name => name === possibleName)) return;
 
-        const type = {id: undefined, name: possibleName} as ProductTypeDto;
+        const type = {id: undefined, name: possibleName, amount: 0} as ProductSizeDto;
 
-        setProductTypes([...productTypes, type]);
-        setSubmitTypes([...submitTypes, type.name]);
+        setProductSizes([...productSizes, type]);
+        setSubmitSizes([...submitSizes, type.name]);
         setPossibleName("");
 
         handleCloseDialog(undefined);
     }
 
-    function handleProductTypeNameSelect(event: SelectChangeEvent){
+    function handleProductSizeNameSelect(event: SelectChangeEvent){
         setPossibleName(event.target.value);
     }
 
-    function handleProductTypeNameChange(event: React.ChangeEvent<HTMLInputElement>) {
+    function handleProductSizeNameChange(event: React.ChangeEvent<HTMLInputElement>) {
         setPossibleName(event.target.value);
     }
 
-    async function onSubmitProductTypes() {
+    async function onSubmitProductSizes() {
         //send data to server
         try {
-            await protectedAxios.post(BASE_URL + ENDPOINTS.product_types, submitTypes);
+            await protectedAxios.post(BASE_URL + ENDPOINTS.product_sizes, submitSizes);
         } catch (err) {
             console.error("Error posting product types", err);
         }
 
         //clear array
-        setSubmitTypes([]);
+        setSubmitSizes([]);
 
         //reload page?
     }
@@ -112,7 +112,7 @@ export const ProductTypeCreation: React.FC<ProductTypeCreationProps> = ({header,
                     justifyContent: "flex-start",
                     gap: 2
                 }}>
-                {productTypes.map((type) => (
+                {productSizes.map((type) => (
                     <Box key={`${type.name}`}>
                         <Box
                             sx={{
@@ -138,7 +138,7 @@ export const ProductTypeCreation: React.FC<ProductTypeCreationProps> = ({header,
                             <Button onClick={() =>
                             {
                                 setRemoveDialog(true);
-                                setRemoveType(type);
+                                setRemoveSize(type);
                             }}>
                                 <Delete color={"error"}/>
                             </Button>
@@ -156,11 +156,11 @@ export const ProductTypeCreation: React.FC<ProductTypeCreationProps> = ({header,
                                     <Select
                                         label="Change this type to"
                                         value={possibleName}
-                                        onChange={handleProductTypeNameSelect}
+                                        onChange={handleProductSizeNameSelect}
                                     >
                                         {
-                                            productTypes
-                                                .filter((el) => el !== removeType)
+                                            productSizes
+                                                .filter((el) => el !== removeSize)
                                                 .map((sel) => (
                                                     <MenuItem value={sel.name} key={`${sel.name}`}>{sel.name}</MenuItem>
                                                 ))
@@ -168,7 +168,7 @@ export const ProductTypeCreation: React.FC<ProductTypeCreationProps> = ({header,
                                     </Select>
                             </DialogContent>
                             <DialogActions>
-                                <Button onClick={() => handleDeleteProductType(removeType, possibleName)}>Remove</Button>
+                                <Button onClick={() => handleDeleteProductType(removeSize, possibleName)}>Remove</Button>
                                 <Button onClick={() => handleCloseDialog(undefined)}>Close</Button>
                             </DialogActions>
                         </Dialog>
@@ -187,7 +187,7 @@ export const ProductTypeCreation: React.FC<ProductTypeCreationProps> = ({header,
                         <TextField
                             fullWidth
                             placeholder="Product Name"
-                            onChange={handleProductTypeNameChange}
+                            onChange={handleProductSizeNameChange}
                         />
                     </DialogContent>
                     <DialogActions>
@@ -212,8 +212,8 @@ export const ProductTypeCreation: React.FC<ProductTypeCreationProps> = ({header,
                     </Button>
 
                     {/* SUBMIT BUTTON */}
-                    {submitTypes.length > 0 &&
-                        <Button type="submit" variant="contained" color="success" onClick={onSubmitProductTypes}>
+                    {submitSizes.length > 0 &&
+                        <Button type="submit" variant="contained" color="success" onClick={onSubmitProductSizes}>
                             <Send/> Create
                         </Button>
                     }
