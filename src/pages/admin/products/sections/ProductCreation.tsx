@@ -74,11 +74,7 @@ export const ProductCreation: React.FC<ProductCreationProps> = ({header, types, 
                 values[index].name = event.target.value;
                 break;
             case ProductField.DESCRIPTION:
-                if (event.target.value === '') {
-                    values[index].description = undefined;
-                } else {
-                    values[index].description = event.target.value;
-                }
+                values[index].description = event.target.value === '' ? undefined : event.target.value;
                 break;
             case ProductField.PRICE:
                 values[index].price = parseInt(event.target.value);

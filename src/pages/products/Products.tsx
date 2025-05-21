@@ -34,9 +34,9 @@ export const Products: React.FC = () => {
                             <div className="col-sm-4 offset-md-1 py-4">
                                 <h4>Contact</h4>
                                 <ul className="list-unstyled">
-                                    <li><a href="#" className="text-white">Follow on Twitter</a></li>
-                                    <li><a href="#" className="text-white">Like on Facebook</a></li>
-                                    <li><a href="#" className="text-white">Email me</a></li>
+                                    <li><button className="text-white">Follow on Twitter</button></li>
+                                    <li><button className="text-white">Like on Facebook</button></li>
+                                    <li><button className="text-white">Email me</button></li>
                                 </ul>
                             </div>
                         </div>
@@ -44,7 +44,7 @@ export const Products: React.FC = () => {
                 </div>
                 <div className="navbar navbar-dark bg-dark shadow-sm">
                     <div className="container">
-                        <a href="#" className="navbar-brand d-flex align-items-center">
+                        <button className="navbar-brand d-flex align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none"
                                  stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                                  aria-hidden="true" className="me-2" viewBox="0 0 24 24">
@@ -53,7 +53,7 @@ export const Products: React.FC = () => {
                                 <circle cx="12" cy="13" r="4"/>
                             </svg>
                             <strong>Album</strong>
-                        </a>
+                        </button>
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false"
                                 aria-label="Toggle navigation">
@@ -73,8 +73,8 @@ export const Products: React.FC = () => {
                                 below—its contents, the creator, etc. Make it short and sweet, but not too short so
                                 folks don’t simply skip over it entirely.</p>
                             <p>
-                                <a href="#" className="btn btn-primary my-2">Main call to action</a>
-                                <a href="#" className="btn btn-secondary my-2">Secondary action</a>
+                                <button className="btn btn-primary my-2">Main call to action</button>
+                                <button className="btn btn-secondary my-2">Secondary action</button>
                             </p>
                         </div>
                     </div>
@@ -87,7 +87,7 @@ export const Products: React.FC = () => {
                             <div className="col">
                                 <div className="card shadow-sm">
                                     <svg className="bd-placeholder-img card-img-top" width="100%" height="225"
-                                         xmlns="http://www.w3.org/2000/svg" role="img"
+                                         xmlns="http://www.w3.org/2000/svg"
                                          aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
                                          focusable="false"><title>Placeholder</title>
                                         <rect width="100%" height="100%" fill="#55595c"/>
@@ -114,7 +114,7 @@ export const Products: React.FC = () => {
                             <div className="col">
                                 <div className="card shadow-sm">
                                     <svg className="bd-placeholder-img card-img-top" width="100%" height="225"
-                                         xmlns="http://www.w3.org/2000/svg" role="img"
+                                         xmlns="http://www.w3.org/2000/svg"
                                          aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
                                          focusable="false"><title>Placeholder</title>
                                         <rect width="100%" height="100%" fill="#55595c"/>
@@ -141,89 +141,7 @@ export const Products: React.FC = () => {
                             <div className="col">
                                 <div className="card shadow-sm">
                                     <svg className="bd-placeholder-img card-img-top" width="100%" height="225"
-                                         xmlns="http://www.w3.org/2000/svg" role="img"
-                                         aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
-                                         focusable="false"><title>Placeholder</title>
-                                        <rect width="100%" height="100%" fill="#55595c"/>
-                                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                                    </svg>
-                                    <div className="card-body">
-                                        <p className="card-text">This is a wider card with supporting text below as a
-                                            natural lead-in to additional content. This content is a little bit
-                                            longer.</p>
-                                        <div className="d-flex justify-content-between align-items-center">
-                                            <div className="btn-group">
-                                                <button type="button"
-                                                        className="btn btn-sm btn-outline-secondary">View
-                                                </button>
-                                                <button type="button"
-                                                        className="btn btn-sm btn-outline-secondary">Edit
-                                                </button>
-                                            </div>
-                                            <small className="text-body-secondary">9 mins</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="col">
-                                <div className="card shadow-sm">
-                                    <svg className="bd-placeholder-img card-img-top" width="100%" height="225"
-                                         xmlns="http://www.w3.org/2000/svg" role="img"
-                                         aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
-                                         focusable="false"><title>Placeholder</title>
-                                        <rect width="100%" height="100%" fill="#55595c"/>
-                                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                                    </svg>
-                                    <div className="card-body">
-                                        <p className="card-text">This is a wider card with supporting text below as a
-                                            natural lead-in to additional content. This content is a little bit
-                                            longer.</p>
-                                        <div className="d-flex justify-content-between align-items-center">
-                                            <div className="btn-group">
-                                                <button type="button"
-                                                        className="btn btn-sm btn-outline-secondary">View
-                                                </button>
-                                                <button type="button"
-                                                        className="btn btn-sm btn-outline-secondary">Edit
-                                                </button>
-                                            </div>
-                                            <small className="text-body-secondary">9 mins</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div className="card shadow-sm">
-                                    <svg className="bd-placeholder-img card-img-top" width="100%" height="225"
-                                         xmlns="http://www.w3.org/2000/svg" role="img"
-                                         aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
-                                         focusable="false"><title>Placeholder</title>
-                                        <rect width="100%" height="100%" fill="#55595c"/>
-                                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                                    </svg>
-                                    <div className="card-body">
-                                        <p className="card-text">This is a wider card with supporting text below as a
-                                            natural lead-in to additional content. This content is a little bit
-                                            longer.</p>
-                                        <div className="d-flex justify-content-between align-items-center">
-                                            <div className="btn-group">
-                                                <button type="button"
-                                                        className="btn btn-sm btn-outline-secondary">View
-                                                </button>
-                                                <button type="button"
-                                                        className="btn btn-sm btn-outline-secondary">Edit
-                                                </button>
-                                            </div>
-                                            <small className="text-body-secondary">9 mins</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div className="card shadow-sm">
-                                    <svg className="bd-placeholder-img card-img-top" width="100%" height="225"
-                                         xmlns="http://www.w3.org/2000/svg" role="img"
+                                         xmlns="http://www.w3.org/2000/svg"
                                          aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
                                          focusable="false"><title>Placeholder</title>
                                         <rect width="100%" height="100%" fill="#55595c"/>
@@ -251,7 +169,7 @@ export const Products: React.FC = () => {
                             <div className="col">
                                 <div className="card shadow-sm">
                                     <svg className="bd-placeholder-img card-img-top" width="100%" height="225"
-                                         xmlns="http://www.w3.org/2000/svg" role="img"
+                                         xmlns="http://www.w3.org/2000/svg"
                                          aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
                                          focusable="false"><title>Placeholder</title>
                                         <rect width="100%" height="100%" fill="#55595c"/>
@@ -278,7 +196,7 @@ export const Products: React.FC = () => {
                             <div className="col">
                                 <div className="card shadow-sm">
                                     <svg className="bd-placeholder-img card-img-top" width="100%" height="225"
-                                         xmlns="http://www.w3.org/2000/svg" role="img"
+                                         xmlns="http://www.w3.org/2000/svg"
                                          aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
                                          focusable="false"><title>Placeholder</title>
                                         <rect width="100%" height="100%" fill="#55595c"/>
@@ -305,12 +223,95 @@ export const Products: React.FC = () => {
                             <div className="col">
                                 <div className="card shadow-sm">
                                     <svg className="bd-placeholder-img card-img-top" width="100%" height="225"
-                                         xmlns="http://www.w3.org/2000/svg" role="img"
+                                         xmlns="http://www.w3.org/2000/svg"
                                          aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
                                          focusable="false"><title>Placeholder</title>
                                         <rect width="100%" height="100%" fill="#55595c"/>
                                         <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
                                     </svg>
+                                    <div className="card-body">
+                                        <p className="card-text">This is a wider card with supporting text below as a
+                                            natural lead-in to additional content. This content is a little bit
+                                            longer.</p>
+                                        <div className="d-flex justify-content-between align-items-center">
+                                            <div className="btn-group">
+                                                <button type="button"
+                                                        className="btn btn-sm btn-outline-secondary">View
+                                                </button>
+                                                <button type="button"
+                                                        className="btn btn-sm btn-outline-secondary">Edit
+                                                </button>
+                                            </div>
+                                            <small className="text-body-secondary">9 mins</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col">
+                                <div className="card shadow-sm">
+                                    <svg className="bd-placeholder-img card-img-top" width="100%" height="225"
+                                         xmlns="http://www.w3.org/2000/svg"
+                                         aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
+                                         focusable="false"><title>Placeholder</title>
+                                        <rect width="100%" height="100%" fill="#55595c"/>
+                                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+                                    </svg>
+                                    <div className="card-body">
+                                        <p className="card-text">This is a wider card with supporting text below as a
+                                            natural lead-in to additional content. This content is a little bit
+                                            longer.</p>
+                                        <div className="d-flex justify-content-between align-items-center">
+                                            <div className="btn-group">
+                                                <button type="button"
+                                                        className="btn btn-sm btn-outline-secondary">View
+                                                </button>
+                                                <button type="button"
+                                                        className="btn btn-sm btn-outline-secondary">Edit
+                                                </button>
+                                            </div>
+                                            <small className="text-body-secondary">9 mins</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col">
+                                <div className="card shadow-sm">
+                                    <svg className="bd-placeholder-img card-img-top" width="100%" height="225"
+                                         xmlns="http://www.w3.org/2000/svg"
+                                         aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
+                                         focusable="false"><title>Placeholder</title>
+                                        <rect width="100%" height="100%" fill="#55595c"/>
+                                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+                                    </svg>
+                                    <div className="card-body">
+                                        <p className="card-text">This is a wider card with supporting text below as a
+                                            natural lead-in to additional content. This content is a little bit
+                                            longer.</p>
+                                        <div className="d-flex justify-content-between align-items-center">
+                                            <div className="btn-group">
+                                                <button type="button"
+                                                        className="btn btn-sm btn-outline-secondary">View
+                                                </button>
+                                                <button type="button"
+                                                        className="btn btn-sm btn-outline-secondary">Edit
+                                                </button>
+                                            </div>
+                                            <small className="text-body-secondary">9 mins</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col">
+                                <div className="card shadow-sm">
+                                    <svg className="bd-placeholder-img card-img-top" width="100%" height="225"
+                                         xmlns="http://www.w3.org/2000/svg"
+                                         aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
+                                         focusable="false"><title>Placeholder</title>
+                                        <rect width="100%" height="100%" fill="#55595c"/>
+                                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+                                    </svg>
+
                                     <div className="card-body">
                                         <p className="card-text">This is a wider card with supporting text below as a
                                             natural lead-in to additional content. This content is a little bit
@@ -338,7 +339,7 @@ export const Products: React.FC = () => {
             <footer className="text-body-secondary py-5">
                 <div className="container">
                     <p className="float-end mb-1">
-                        <a href="#">Back to top</a>
+                        <button>Back to top</button>
                     </p>
                     <p className="mb-1">Album example is &copy; Bootstrap, but please download and customize it for
                         yourself!</p>
@@ -346,9 +347,6 @@ export const Products: React.FC = () => {
                         href="/docs/5.3/getting-started/introduction/">getting started guide</a>.</p>
                 </div>
             </footer>
-            <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js"
-                    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-                    crossOrigin="anonymous"></script>
         </>
     );
 }
