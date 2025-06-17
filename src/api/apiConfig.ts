@@ -11,5 +11,6 @@ export const ENDPOINTS = {
   product_sizes: "/storage/products/sizes",
   product_colors: "/storage/products/colors",
   product_info: "/storage/products/information",
+  products_filter: "/storage/products/filter",
   userDetails: "/user/details",
 };

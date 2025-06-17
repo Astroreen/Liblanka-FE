@@ -146,6 +146,17 @@ export const Dashboard: React.FC = () => {
                 <ul className="nav flex-column">
                   <li className="nav-item">
                     <button
+                      className="nav-link d-flex align-items-center gap-2"
+                      onClick={() => (window.location.href = "/")}
+                    >
+                      <svg className="bi">
+                        <use xlinkHref="#arrow-left-circle" />
+                      </svg>
+                      Back to Home
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
                       className="nav-link d-flex align-items-center gap-2 active"
                       aria-current="page"
                       onClick={() => setActiveComponent("dashboard")}
@@ -181,9 +192,6 @@ export const Dashboard: React.FC = () => {
                     >
                       <MenuItem onClick={handleCreateProduct}>
                         Product creation
-                      </MenuItem>
-                      <MenuItem onClick={handleMenuClose}>
-                        Product management
                       </MenuItem>
                       <MenuItem onClick={handleProductInformation}>
                         Product information manager
