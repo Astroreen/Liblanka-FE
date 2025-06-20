@@ -211,7 +211,6 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
                 type="number"
                 value={minPrice}
                 onChange={(e) => setMinPrice(e.target.value)}
-                inputProps={{ min: 0, step: "0.01" }}
                 sx={{ flex: 1 }}
               />
               <TextField
@@ -219,7 +218,6 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
                 type="number"
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(e.target.value)}
-                inputProps={{ min: 0, step: "0.01" }}
                 sx={{ flex: 1 }}
               />
             </Box>
