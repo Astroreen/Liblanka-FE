@@ -13,6 +13,9 @@ import { ProductCard } from "./components/ProductCard";
 import { ProductCardDto } from "../../dto/ProductCardDto";
 import { useProtectedAxios } from "../../hooks/useProtectedAxios";
 import { ENDPOINTS } from "../../api/apiConfig";
+import { Logo } from "../../components/logo/Logo";
+import Button from "@mui/material/Button";
+import LanguageSwitcher from "../../components/languageSwitcher/LanguageSwitcher";
 
 interface FilterParams {
   name?: string;
@@ -105,9 +108,38 @@ export const Products: React.FC = () => {
         <ProductFilter onFilterChange={handleFilterChange} />
 
         <Container maxWidth="xl" sx={{ py: 4 }}>
-          <Typography variant="h4" component="h1" gutterBottom align="center">
-            Our Products
-          </Typography>
+          <Box sx={{ display: "flex", alignItems: "center", mb: 5, position: "relative" }}>
+            <Box sx={{ position: "absolute", left: 100, top: 12, width: "fit-content", height: "fit-content" }}>
+              <Button
+                onClick={() => (window.location.href = "/")}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  p: 0,
+                  width: "fit-content",
+                  minWidth: 0,
+                  background: "none",
+                  boxShadow: "none",
+                  '&:hover': { background: "none", boxShadow: "none" }
+                }}
+              >
+                <Logo />
+              </Button>
+            </Box>
+            <Box sx={{ flex: 1, display: "flex", justifyContent: "center" }}>
+              <Typography
+                variant="h4"
+                component="h1"
+                gutterBottom
+                align="center"
+                sx={{ fontWeight: "bold", letterSpacing: 2 }}
+              >
+                {t("page.products.our_products")}
+              </Typography>
+            </Box>
+
+            <LanguageSwitcher/>
+          </Box>
 
           {error && (
             <Typography color="error" align="center" gutterBottom>

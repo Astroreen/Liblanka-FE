@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   Box,
-  Drawer,
   IconButton,
   TextField,
   Select,
@@ -14,11 +13,13 @@ import {
   CircularProgress,
 } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import CloseIcon from "@mui/icons-material/Close";
 import { ProductTypeDto } from "../../../dto/ProductTypeDto";
 import { ProductSizeDto } from "../../../dto/ProductSizeDto";
 import { ProductColorDto } from "../../../dto/ProductColorDto";
 import { useProtectedAxios } from "../../../hooks/useProtectedAxios";
 import { ENDPOINTS } from "../../../api/apiConfig";
+import { useTheme } from "@mui/material/styles";
 
 interface FilterParams {
   name?: string;
@@ -53,6 +54,9 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
 
   // Debounce timer
   const [searchTimer, setSearchTimer] = useState<NodeJS.Timeout | null>(null);
+
+  const theme = useTheme();
+  const sidebarWidth = 250;
 
   useEffect(() => {
     const fetchFilterData = async () => {
@@ -126,194 +130,213 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
 
   return (
     <>
-      <IconButton
-        onClick={() => setIsOpen(!isOpen)}
-        sx={{ position: "fixed", left: 0, top: "50%", zIndex: 1000 }}
+      {/* Bump button always visible at left edge, moves with sidebar */}
+      <Box
+        sx={{
+          position: "fixed",
+          left: isOpen ? `${sidebarWidth}px` : 0,
+          top: "50%",
+          zIndex: 1301,
+          transition: "left 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+        }}
       >
-        <FilterListIcon />
-      </IconButton>
+        <IconButton
+          onClick={() => setIsOpen((prev) => !prev)}
+          sx={{
+            background: "white",
+            borderRadius: "0 24px 24px 0",
+            boxShadow: "2px 1px 2px 0px",
+            border: "1px 1px 1px 1px",
+            borderColor: 'grey.300',
+            width: 48,
+            height: 48,
+          }}
+        >
+          {isOpen ? <CloseIcon /> : <FilterListIcon />}
+        </IconButton>
+      </Box>
 
-      <Drawer
-        anchor="left"
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
-        variant="persistent"
+      {/* Custom slide-in sidebar */}
+      <Box
+        sx={{
+          position: "fixed",
+          top: 0,
+          left: isOpen ? 0 : `-${sidebarWidth}px`,
+          width: `${sidebarWidth}px`,
+          height: "100vh",
+          bgcolor: "background.paper",
+          boxShadow: 6,
+          zIndex: 1300,
+          p: 2,
+          transition: "left 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+          overflowY: "auto",
+        }}
       >
-        <Box sx={{ width: 250, p: 2 }}>
-          <Typography variant="h6" gutterBottom>
-            Filters
-          </Typography>
-
-          {loading ? (
-            <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
-              <CircularProgress />
-            </Box>
-          ) : (
-            <>
-              <TextField
-                fullWidth
-                label="Search by name"
-                value={searchName}
-                onChange={(e) => setSearchName(e.target.value)}
-                margin="normal"
-              />
-
-              <FormControl fullWidth margin="normal">
-                <InputLabel>Product Type</InputLabel>
-                <Select
-                  value={selectedType}
-                  onChange={(e) => setSelectedType(e.target.value as number)}
-                  label="Product Type"
-                >
-                  <MenuItem value="">
-                    <em>None</em>
+        <Typography variant="h6" gutterBottom>
+          Filters
+        </Typography>
+        {loading ? (
+          <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <>
+            <TextField
+              fullWidth
+              label="Search by name"
+              value={searchName}
+              onChange={(e) => setSearchName(e.target.value)}
+              margin="normal"
+            />
+            <FormControl fullWidth margin="normal">
+              <InputLabel>Product Type</InputLabel>
+              <Select
+                value={selectedType}
+                onChange={(e) => setSelectedType(e.target.value as number)}
+                label="Product Type"
+              >
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                {types.map((type) => (
+                  <MenuItem key={type.id} value={type.id}>
+                    {type.name}
                   </MenuItem>
-                  {types.map((type) => (
-                    <MenuItem key={type.id} value={type.id}>
-                      {type.name}
+                ))}
+              </Select>
+            </FormControl>
+            <Box sx={{ mt: 2, display: "flex", gap: 1 }}>
+              <TextField
+                label="Min Price"
+                type="number"
+                value={minPrice}
+                onChange={(e) => setMinPrice(e.target.value)}
+                inputProps={{ min: 0, step: "0.01" }}
+                sx={{ flex: 1 }}
+              />
+              <TextField
+                label="Max Price"
+                type="number"
+                value={maxPrice}
+                onChange={(e) => setMaxPrice(e.target.value)}
+                inputProps={{ min: 0, step: "0.01" }}
+                sx={{ flex: 1 }}
+              />
+            </Box>
+            <Box sx={{ mt: 2 }}>
+              <Typography variant="subtitle2" gutterBottom>
+                Sizes
+              </Typography>
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 1 }}>
+                {selectedSizes.map((sizeId) => {
+                  const size = sizes.find((s) => s.id === sizeId);
+                  return (
+                    <Chip
+                      key={sizeId}
+                      label={size?.name}
+                      onDelete={() => handleSizeDelete(sizeId)}
+                    />
+                  );
+                })}
+              </Box>
+              <FormControl fullWidth>
+                <Select
+                  value=""
+                  onChange={(e) => handleSizeSelect(Number(e.target.value))}
+                  displayEmpty
+                >
+                  <MenuItem value="" disabled>
+                    Select size
+                  </MenuItem>
+                  {sizes.map((size: ProductSizeDto) => (
+                    <MenuItem
+                      key={size.id}
+                      value={size.id}
+                      disabled={selectedSizes.includes(Number(size.id))}
+                    >
+                      {size.name}
                     </MenuItem>
                   ))}
                 </Select>
               </FormControl>
-
-              <Box sx={{ mt: 2, display: "flex", gap: 1 }}>
-                <TextField
-                  label="Min Price"
-                  type="number"
-                  value={minPrice}
-                  onChange={(e) => setMinPrice(e.target.value)}
-                  inputProps={{ min: 0, step: "0.01" }}
-                  sx={{ flex: 1 }}
-                />
-                <TextField
-                  label="Max Price"
-                  type="number"
-                  value={maxPrice}
-                  onChange={(e) => setMaxPrice(e.target.value)}
-                  inputProps={{ min: 0, step: "0.01" }}
-                  sx={{ flex: 1 }}
-                />
+            </Box>
+            <Box sx={{ mt: 2 }}>
+              <Typography variant="subtitle2" gutterBottom>
+                Colors
+              </Typography>
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 1 }}>
+                {selectedColors.map((colorId) => {
+                  const color = colors.find((c) => c.id === colorId);
+                  return (
+                    <Chip
+                      key={colorId}
+                      label={color?.name}
+                      onDelete={() => handleColorDelete(colorId)}
+                      sx={{
+                        "&::before": {
+                          content: '""',
+                          display: "inline-block",
+                          width: "16px",
+                          height: "16px",
+                          marginLeft: "5px",
+                          borderRadius: "50%",
+                          backgroundColor: color?.hex ?? "#000000",
+                          marginRight: "5px",
+                        },
+                      }}
+                    />
+                  );
+                })}
               </Box>
-
-              <Box sx={{ mt: 2 }}>
-                <Typography variant="subtitle2" gutterBottom>
-                  Sizes
-                </Typography>
-                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 1 }}>
-                  {selectedSizes.map((sizeId) => {
-                    const size = sizes.find((s) => s.id === sizeId);
-                    return (
-                      <Chip
-                        key={sizeId}
-                        label={size?.name}
-                        onDelete={() => handleSizeDelete(sizeId)}
-                      />
-                    );
-                  })}
-                </Box>
-                <FormControl fullWidth>
-                  <Select
-                    value=""
-                    onChange={(e) => handleSizeSelect(Number(e.target.value))}
-                    displayEmpty
-                  >
-                    <MenuItem value="" disabled>
-                      Select size
-                    </MenuItem>
-                    {sizes.map((size: ProductSizeDto) => (
-                      <MenuItem
-                        key={size.id}
-                        value={size.id}
-                        disabled={selectedSizes.includes(Number(size.id))}
-                      >
-                        {size.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Box>
-
-              <Box sx={{ mt: 2 }}>
-                <Typography variant="subtitle2" gutterBottom>
-                  Colors
-                </Typography>
-                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 1 }}>
-                  {selectedColors.map((colorId) => {
-                    const color = colors.find((c) => c.id === colorId);
-                    return (
-                      <Chip
-                        key={colorId}
-                        label={color?.name}
-                        onDelete={() => handleColorDelete(colorId)}
-                        sx={{
-                          "&::before": {
-                            content: '""',
-                            display: "inline-block",
-                            width: "16px",
-                            height: "16px",
-                            marginLeft: "5px",
-                            borderRadius: "50%",
-                            backgroundColor: color?.hex ?? "#000000",
-                            marginRight: "5px",
-                          },
-                        }}
-                      />
-                    );
-                  })}
-                </Box>
-                <FormControl fullWidth>
-                  <Select
-                    value=""
-                    onChange={(e) => handleColorSelect(Number(e.target.value))}
-                    displayEmpty
-                  >
-                    <MenuItem value="" disabled>
-                      Select color
-                    </MenuItem>
-                    {colors.map((color: ProductColorDto) => (
-                      <MenuItem
-                        key={color.id}
-                        value={color.id}
-                        disabled={selectedColors.includes(Number(color.id))}
-                      >
+              <FormControl fullWidth>
+                <Select
+                  value=""
+                  onChange={(e) => handleColorSelect(Number(e.target.value))}
+                  displayEmpty
+                >
+                  <MenuItem value="" disabled>
+                    Select color
+                  </MenuItem>
+                  {colors.map((color: ProductColorDto) => (
+                    <MenuItem
+                      key={color.id}
+                      value={color.id}
+                      disabled={selectedColors.includes(Number(color.id))}
+                    >
+                      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                         <Box
-                          sx={{ display: "flex", alignItems: "center", gap: 1 }}
-                        >
-                          <Box
-                            sx={{
-                              width: "22px",
-                              height: "22px",
-                              borderRadius: "50%",
-                              backgroundColor: color.hex,
-                            }}
-                          />
-                          {color.name}
-                        </Box>
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Box>
-
-              <Button
-                fullWidth
-                variant="outlined"
-                onClick={() => {
-                  setSearchName("");
-                  setSelectedType("");
-                  setSelectedSizes([]);
-                  setSelectedColors([]);
-                  setMinPrice("");
-                  setMaxPrice("");
-                }}
-                sx={{ mt: 2 }}
-              >
-                Clear All
-              </Button>
-            </>
-          )}
-        </Box>
-      </Drawer>
+                          sx={{
+                            width: "22px",
+                            height: "22px",
+                            borderRadius: "50%",
+                            backgroundColor: color.hex,
+                          }}
+                        />
+                        {color.name}
+                      </Box>
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
+            <Button
+              fullWidth
+              variant="outlined"
+              onClick={() => {
+                setSearchName("");
+                setSelectedType("");
+                setSelectedSizes([]);
+                setSelectedColors([]);
+                setMinPrice("");
+                setMaxPrice("");
+              }}
+              sx={{ mt: 2 }}
+            >
+              Clear All
+            </Button>
+          </>
+        )}
+      </Box>
     </>
   );
 };
