@@ -1,31 +1,218 @@
 {
-  "common.name": "Liblanka",
-  "common.slogan-end": "tai j\u016Bs\u0173 kelias \u012F unikalaus \u012Fvaizd\u017Eio k\u016Brim\u0105",
+  "common": {
+    "name": "Liblanka",
+    "slogan-end": "yra jūsų kelias į unikalaus įvaizdžio kūrimą",
+    "create": "Sukurti",
+    "send": "Siųsti"
+  },
 
-  "page.login.title": "Prisijungti",
-  "page.products.title": "Produktai",
-  "page.admin.dashboard.title": "Prietaisų skydelis",
+  "page": {
+    "home": {
+      "title": "Liblanka"
+    },
+    "login": {
+      "title": "Prisijungimas"
+    },
+    "products": {
+      "title": "Produktai",
+      "our_products": "Mūsų produktai",
+      "card": {
+        "imageNotAvailable": "Nuotrauka nepasiekiama"
+      },
+      "filter": {
+        "title": "Filtrai",
+        "searchByName": "Ieškoti pagal pavadinimą",
+        "productType": "Produkto tipas",
+        "none": "Joks",
+        "minPrice": "Minimali kaina",
+        "maxPrice": "Maksimali kaina",
+        "sizes": "Dydžiai",
+        "selectSize": "Pasirinkite dydį",
+        "colors": "Spalvos",
+        "selectColor": "Pasirinkite spalvą",
+        "clearAll": "Išvalyti viską"
+      },
+      "creation": {
+        "title": "Sukurti naują produktą",
+        "loading": "Kraunama produkto informacija...",
+        "error_loading": "Klaida kraunant produkto informaciją: {{error}}",
+        "no_info": "Nėra produkto informacijos",
+        "cancel": "Atšaukti",
+        "send": "Siųsti",
+        "form": {
+          "name": "Pavadinimas",
+          "name_required": "Pavadinimas yra privalomas",
+          "description": "Aprašymas",
+          "price": "Kaina",
+          "price_required": "Reikalinga galiojanti kaina",
+          "productType": "Produkto tipas",
+          "productType_required": "Produkto tipas yra privalomas"
+        },
+        "variants": {
+          "title": "Produkto variantai",
+          "table": {
+            "color": "Spalva",
+            "size": "Dydis",
+            "quantity": "Kiekis",
+            "delete": "Ištrinti"
+          },
+          "add_variant": "Pridėti variantą"
+        },
+        "attributes": {
+          "title": "Atributai",
+          "new": "Pridėti naują atributą",
+          "placeholder": "Paspauskite Enter, kad pridėti"
+        },
+        "images": {
+          "title": "Nuotraukos",
+          "use_color_specific": "Naudoti konkrečios spalvos nuotraukas",
+          "imagesForColor": "Nuotraukos {{colorName}} spalvai",
+          "add_image": "Pridėti nuotrauką"
+        }
+      },
+      "information": {
+        "title": "Produktų informacijos valdyklė",
+        "types": {
+          "title": "Produktų tipai",
+          "placeholder": "Įveskite tipo pavadinimą"
+        },
+        "sizes": {
+          "title": "Produktų dydžiai",
+          "placeholder": "Įveskite dydžio pavadinimą"
+        },
+        "colors": {
+          "title": "Produktų spalvos",
+          "namePlaceholder": "Įveskite spalvos pavadinimą",
+          "hexPlaceholder": "Įveskite šešioliktainį spalvos kodą"
+        }
+      }
+    },
+    "admin": {
+      "dashboard": {
+        "title": "Valdymo skydas",
+        "header": "Valdymo skydas",
+        "sectionTitle": "Skyriaus pavadinimas",
+        "table": {
+          "header": {
+            "number": "#",
+            "placeholder": "Antraštė"
+          }
+        }
+      },
+      "sidebar": {
+        "companyName": "Įmonės pavadinimas",
+        "backToHome": "Atgal į namus",
+        "dashboard": "Valdymo skydas",
+        "orders": "Užsakymai",
+        "products": "Produktai",
+        "products_creation": "Produkto kūrimas",
+        "products_informationManager": "Produktų informacijos valdyklė",
+        "customers": "Klientai",
+        "reports": "Ataskaitos",
+        "integrations": "Integracijos",
+        "savedReports": "Išsaugotos ataskaitos",
+        "addNewReport": "Pridėti naują ataskaitą",
+        "currentMonth": "Einamasis mėnuo",
+        "settings": "Nustatymai",
+        "signOut": "Atsijungti"
+      },
+      "header": {
+        "home": "Pagrindinis",
+        "products": "Produktai",
+        "about": "Apie mus",
+        "contacts": "Kontaktai",
+        "size": "Dydis",
+        "admin_panel": "Valdymo skydas"
+      },
+      "main": {
+        "title": "Pagrindinis puslapis",
+        "about": {
+          "headline": "Apie mus",
+          "about-us": "Liblanka – tai daugiau nei apatinio trikotažo parduotuvė. Tai jūsų vedlys į prabangos, komforto ir nepriekaištingo stiliaus pasaulį. Savo klientams siūlome platų moteriško ir vyriško apatinio trikotažo asortimentą iš pirmaujančių pasaulio prekių ženklų, tokių kaip Acousma, Balaloum, Diorella ir Anna.",
+          "why-us": "Kodėl Liblanka?",
+          "list": {
+            "1": "Aukščiausia kokybė:",
+            "1_text": "Bendradarbiaujame tik su patikimais gamintojais, kurie garantuoja aukščiausią savo gaminių kokybę. Visi modeliai mūsų kataloge pagaminti iš geriausių medžiagų, naudojant modernias technologijas.",
+            "2": "Platus pasirinkimas:",
+            "2_text": "Liblankoje rasite modelių kiekvienam skoniui ir figūros tipui. Siūlome tiek klasikinius modelius, tiek naujausias mados tendencijas.",
+            "3": "Išskirtiniai prekių ženklai:",
+            "3_text": "Savo klientams siūlome išskirtinius apatinio trikotažo prekių ženklus, kurių nerasite kitose parduotuvėse.",
+            "4": "Asmeninis požiūris:",
+            "4_text": "Mūsų patyrę konsultantai padės jums išsirinkti modelį, kuris puikiai atitiks jūsų stilių ir dydį.",
+            "5": "Patogus aptarnavimas:",
+            "5_text": "Galite užsisakyti patikusį modelį internetu arba apsilankyti mūsų parduotuvėje Vilniuje. Siūlome įvairius mokėjimo ir pristatymo būdus."
+          }
+        }
+      }
+    },
+    "main": {
+      "title": "Pagrindinis puslapis",
+      "about": {
+        "headline": "Apie mus",
+        "about-us": "Liblanka \u2013 tai ne tik apatini\u0173 drabu\u017Ei\u0173 parduotuv\u0117. Tai J\u016Bs\u0173 vadovas \u012F prabangos, komforto ir nepriekai\u0161tingo stiliaus pasaul\u012F. Si\u016Blome savo klientams plat\u0173 moteri\u0161k\u0173 ir vyri\u0161k\u0173 apatini\u0173 drabu\u017Ei\u0173 asortiment\u0105 i\u0161 \u017Einom\u0173 pasaulyje prek\u0117s \u017Eenkl\u0173, toki\u0173 kaip Acousma, Balaloum, Diorella ir Anna.",
+        "why-us": "Kod\u0117l Liblanka?",
+        "list": {
+          "1": "Auk\u0161\u010Diausia kokyb\u0117:",
+          "1_text": "Bendradarbiaujame tik su patikimais gamintojais, kurie garantuoja auk\u0161\u010Diausi\u0105 savo produkcijos kokyb\u0119. Visi m\u016Bs\u0173 katalogo modeliai yra pagaminti i\u0161 geriausi\u0173 med\u017Eiag\u0173, naudojant \u0161iuolaikines technologijas.",
+          "2": "Platus pasirinkimas:",
+          "2_text": "Liblanka rasite modeli\u0173 kiekvienam skoniui ir fig\u016Brai. Si\u016Blome tiek klasikinius modelius, tiek naujausias mados tendencijas.",
+          "3": "I\u0161skirtiniai prek\u0117s \u017Eenklai:",
+          "3_text": "Si\u016Blome savo klientams i\u0161skirtinius apatini\u0173 drabu\u017Ei\u0173 prek\u0117s \u017Eenklus, kuri\u0173 n\u0117ra kitose parduotuv\u0117se.",
+          "4": "Individualus po\u017Ei\u016Bris:",
+          "4_text": "M\u016Bs\u0173 patyr\u0119 konsultantai pad\u0117s i\u0161sirinkti model\u012F, kuris puikiai atitiks J\u016Bs\u0173 stili\u0173 ir dyd\u012F.",
+          "5": "Patogus aptarnavimas:",
+          "5_text": "Galite u\u017Esisakyti patikus\u012F model\u012F internetu arba apsilankyti m\u016Bs\u0173 parduotuv\u0117je Vilniuje. Si\u016Blome \u012Fvairius mok\u0117jimo ir pristatymo b\u016Bdus."
+        }
+      }
+    }
+  },
 
-  "page.header.home": "Namo",
-  "page.header.products": "Produktai",
-  "page.header.about": "Apie",
-  "page.header.contacts": "Kontaktai",
-  "page.header.size": "Dydis",
-  "page.header.admin_panel": "Prietaisų skydelis",
+  "admin": {
+    "dashboard": {
+      "header": "Valdymo skydas",
+      "share": "Dalintis",
+      "export": "Eksportuoti",
+      "thisWeek": "Ši savaitė",
+      "sectionTitle": "Skyriaus pavadinimas",
+      "table": {
+        "header": {
+          "number": "#",
+          "placeholder": "Antraštė"
+        }
+      }
+    },
+    "sidebar": {
+      "companyName": "Įmonės pavadinimas",
+      "backToHome": "Atgal į namus",
+      "dashboard": "Valdymo skydas",
+      "orders": "Užsakymai",
+      "products": "Produktai",
+      "products.creation": "Produkto kūrimas",
+      "products.informationManager": "Produktų informacijos valdyklė",
+      "customers": "Klientai",
+      "reports": "Ataskaitos",
+      "integrations": "Integracijos",
+      "savedReports": "Išsaugotos ataskaitos",
+      "addNewReport": "Pridėti naują ataskaitą",
+      "currentMonth": "Einamasis mėnuo",
+      "settings": "Nustatymai",
+      "signOut": "Atsijungti"
+    }
+  },
 
-  "page.main.title": "Pagr. puslapis",
-  "page.main.about.headline": "Apie mus",
-  "page.main.about.about-us": "Liblanka \u2013 tai ne tik apatini\u0173 drabu\u017Ei\u0173 parduotuv\u0117. Tai J\u016Bs\u0173 vadovas \u012F prabangos, komforto ir nepriekai\u0161tingo stiliaus pasaul\u012F. Si\u016Blome savo klientams plat\u0173 moteri\u0161k\u0173 ir vyri\u0161k\u0173 apatini\u0173 drabu\u017Ei\u0173 asortiment\u0105 i\u0161 \u017Einom\u0173 pasaulyje prek\u0117s \u017Eenkl\u0173, toki\u0173 kaip Acousma, Balaloum, Diorella ir Anna.",
-  "page.main.about.why-us": "Kod\u0117l Liblanka?",
-  "page.main.about.list.1": "Auk\u0161\u010Diausia kokyb\u0117:",
-  "page.main.about.list.1.text": "Bendradarbiaujame tik su patikimais gamintojais, kurie garantuoja auk\u0161\u010Diausi\u0105 savo produkcijos kokyb\u0119. Visi m\u016Bs\u0173 katalogo modeliai yra pagaminti i\u0161 geriausi\u0173 med\u017Eiag\u0173, naudojant \u0161iuolaikines technologijas.",
-  "page.main.about.list.2": "Platus pasirinkimas:",
-  "page.main.about.list.2.text": "Liblanka rasite modeli\u0173 kiekvienam skoniui ir fig\u016Brai. Si\u016Blome tiek klasikinius modelius, tiek naujausias mados tendencijas.",
-  "page.main.about.list.3": "I\u0161skirtiniai prek\u0117s \u017Eenklai:",
-  "page.main.about.list.3.text": "Si\u016Blome savo klientams i\u0161skirtinius apatini\u0173 drabu\u017Ei\u0173 prek\u0117s \u017Eenklus, kuri\u0173 n\u0117ra kitose parduotuv\u0117se.",
-  "page.main.about.list.4": "Individualus po\u017Ei\u016Bris:",
-  "page.main.about.list.4.text": "M\u016Bs\u0173 patyr\u0119 konsultantai pad\u0117s i\u0161sirinkti model\u012F, kuris puikiai atitiks J\u016Bs\u0173 stili\u0173 ir dyd\u012F.",
-  "page.main.about.list.5": "Patogus aptarnavimas:",
-  "page.main.about.list.5.text": "Galite u\u017Esisakyti patikus\u012F model\u012F internetu arba apsilankyti m\u016Bs\u0173 parduotuv\u0117je Vilniuje. Si\u016Blome \u012Fvairius mok\u0117jimo ir pristatymo b\u016Bdus.",
-  "page.products.our_products": "MŪSŲ PRODUKTAI"
+  "product": {
+    "filter": {
+      "title": "Filtrai",
+      "searchByName": "Ieškoti pagal pavadinimą",
+      "productType": "Produkto tipas",
+      "none": "Joks",
+      "minPrice": "Minimali kaina",
+      "maxPrice": "Maksimali kaina",
+      "sizes": "Dydžiai",
+      "selectSize": "Pasirinkite dydį",
+      "colors": "Spalvos",
+      "selectColor": "Pasirinkite spalvą",
+      "clearAll": "Išvalyti viską"
+    }
+  }
 }

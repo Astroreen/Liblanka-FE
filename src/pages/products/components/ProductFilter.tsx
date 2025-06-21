@@ -20,6 +20,7 @@ import { ProductColorDto } from "../../../dto/ProductColorDto";
 import { useProtectedAxios } from "../../../hooks/useProtectedAxios";
 import { ENDPOINTS } from "../../../api/apiConfig";
 import { useTheme } from "@mui/material/styles";
+import { useTranslation } from "react-i18next";
 
 interface FilterParams {
   name?: string;
@@ -38,6 +39,7 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
   onFilterChange,
 }) => {
   const protectedAxios = useProtectedAxios();
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [types, setTypes] = useState<ProductTypeDto[]>([]);
   const [sizes, setSizes] = useState<ProductSizeDto[]>([]);
@@ -173,7 +175,7 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
         }}
       >
         <Typography variant="h6" gutterBottom>
-          Filters
+          {t("page.productfilter.title")}
         </Typography>
         {loading ? (
           <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
@@ -183,20 +185,20 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
           <>
             <TextField
               fullWidth
-              label="Search by name"
+              label={t("page.productfilter.searchByName")}
               value={searchName}
               onChange={(e) => setSearchName(e.target.value)}
               margin="normal"
             />
             <FormControl fullWidth margin="normal">
-              <InputLabel>Product Type</InputLabel>
+              <InputLabel>{t("page.productfilter.productType")}</InputLabel>
               <Select
                 value={selectedType}
                 onChange={(e) => setSelectedType(e.target.value as number)}
-                label="Product Type"
+                label={t("page.productfilter.productType")}
               >
                 <MenuItem value="">
-                  <em>None</em>
+                  <em>{t("page.productfilter.none")}</em>
                 </MenuItem>
                 {types.map((type) => (
                   <MenuItem key={type.id} value={type.id}>
@@ -207,14 +209,14 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
             </FormControl>
             <Box sx={{ mt: 2, display: "flex", gap: 1 }}>
               <TextField
-                label="Min Price"
+                label={t("page.productfilter.minPrice")}
                 type="number"
                 value={minPrice}
                 onChange={(e) => setMinPrice(e.target.value)}
                 sx={{ flex: 1 }}
               />
               <TextField
-                label="Max Price"
+                label={t("page.productfilter.maxPrice")}
                 type="number"
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(e.target.value)}
@@ -223,7 +225,7 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
             </Box>
             <Box sx={{ mt: 2 }}>
               <Typography variant="subtitle2" gutterBottom>
-                Sizes
+                {t("page.productfilter.sizes")}
               </Typography>
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 1 }}>
                 {selectedSizes.map((sizeId) => {
@@ -244,7 +246,7 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
                   displayEmpty
                 >
                   <MenuItem value="" disabled>
-                    Select size
+                    {t("page.productfilter.selectSize")}
                   </MenuItem>
                   {sizes.map((size: ProductSizeDto) => (
                     <MenuItem
@@ -260,7 +262,7 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
             </Box>
             <Box sx={{ mt: 2 }}>
               <Typography variant="subtitle2" gutterBottom>
-                Colors
+                {t("page.productfilter.colors")}
               </Typography>
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 1 }}>
                 {selectedColors.map((colorId) => {
@@ -293,7 +295,7 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
                   displayEmpty
                 >
                   <MenuItem value="" disabled>
-                    Select color
+                    {t("page.productfilter.selectColor")}
                   </MenuItem>
                   {colors.map((color: ProductColorDto) => (
                     <MenuItem
@@ -330,7 +332,7 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
               }}
               sx={{ mt: 2 }}
             >
-              Clear All
+              {t("page.productfilter.clearAll")}
             </Button>
           </>
         )}

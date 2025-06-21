@@ -5,6 +5,7 @@ import { Menu, MenuItem } from "@mui/material";
 import ProductCreation from "./product/page/ProductCreation";
 import ProductInformationManager from "./product/page/ProductInformationManager";
 import "./Dashboard.css";
+import LanguageSwitcher from "../../components/languageSwitcher/LanguageSwitcher";
 
 export const Dashboard: React.FC = () => {
   const { t } = useTranslation();
@@ -43,43 +44,19 @@ export const Dashboard: React.FC = () => {
         return (
           <>
             <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-              <h1 className="h2">Dashboard</h1>
-              <div className="btn-toolbar mb-2 mb-md-0">
-                <div className="btn-group me-2">
-                  <button
-                    type="button"
-                    className="btn btn-sm btn-outline-secondary"
-                  >
-                    Share
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-sm btn-outline-secondary"
-                  >
-                    Export
-                  </button>
-                </div>
-                <button
-                  type="button"
-                  className="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1"
-                >
-                  <svg className="bi">
-                    <use xlinkHref="#calendar3" />
-                  </svg>
-                  This week
-                </button>
-              </div>
+              <h1 className="h2">{t("page.admin.dashboard.header")}</h1>
+              <LanguageSwitcher />
             </div>
-            <h2>Section title</h2>
+            <h2>{t("page.admin.dashboard.sectionTitle")}</h2>
             <div className="table-responsive small">
               <table className="table table-striped table-sm">
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Header</th>
-                    <th scope="col">Header</th>
-                    <th scope="col">Header</th>
-                    <th scope="col">Header</th>
+                    <th scope="col">{t("page.admin.dashboard.table.header.number")}</th>
+                    <th scope="col">{t("page.admin.dashboard.table.header.placeholder")}</th>
+                    <th scope="col">{t("page.admin.dashboard.table.header.placeholder")}</th>
+                    <th scope="col">{t("page.admin.dashboard.table.header.placeholder")}</th>
+                    <th scope="col">{t("page.admin.dashboard.table.header.placeholder")}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -103,7 +80,7 @@ export const Dashboard: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>{t("page.admin.dashboard.title")}</title>
+        <title>{t("page.page.admin.dashboard.title")}</title>
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -132,7 +109,7 @@ export const Dashboard: React.FC = () => {
             >
               <div className="offcanvas-header">
                 <h5 className="offcanvas-title" id="sidebarMenuLabel">
-                  Company name
+                  {t("page.admin.sidebar.companyName")}
                 </h5>
                 <button
                   type="button"
@@ -152,7 +129,7 @@ export const Dashboard: React.FC = () => {
                       <svg className="bi">
                         <use xlinkHref="#arrow-left-circle" />
                       </svg>
-                      Back to Home
+                      {t("page.admin.sidebar.backToHome")}
                     </button>
                   </li>
                   <li className="nav-item">
@@ -164,7 +141,7 @@ export const Dashboard: React.FC = () => {
                       <svg className="bi">
                         <use xlinkHref="#house-fill" />
                       </svg>
-                      Dashboard
+                      {t("page.admin.sidebar.dashboard")}
                     </button>
                   </li>
                   <li className="nav-item">
@@ -172,7 +149,7 @@ export const Dashboard: React.FC = () => {
                       <svg className="bi">
                         <use xlinkHref="#file-earmark" />
                       </svg>
-                      Orders
+                      {t("page.admin.sidebar.orders")}
                     </button>
                   </li>
                   <li className="nav-item">
@@ -183,7 +160,7 @@ export const Dashboard: React.FC = () => {
                       <svg className="bi">
                         <use xlinkHref="#cart" />
                       </svg>
-                      Products
+                      {t("page.admin.sidebar.products")}
                     </button>
                     <Menu
                       anchorEl={anchorEl}
@@ -191,10 +168,10 @@ export const Dashboard: React.FC = () => {
                       onClose={handleMenuClose}
                     >
                       <MenuItem onClick={handleCreateProduct}>
-                        Product creation
+                        {t("page.admin.sidebar.products_creation")}
                       </MenuItem>
                       <MenuItem onClick={handleProductInformation}>
-                        Product information manager
+                        {t("page.admin.sidebar.products_informationManager")}
                       </MenuItem>
                     </Menu>
                   </li>
@@ -204,7 +181,7 @@ export const Dashboard: React.FC = () => {
                       <svg className="bi">
                         <use xlinkHref="#people" />
                       </svg>
-                      Customers
+                      {t("page.admin.sidebar.customers")}
                     </button>
                   </li>
                   <li className="nav-item">
@@ -212,7 +189,7 @@ export const Dashboard: React.FC = () => {
                       <svg className="bi">
                         <use xlinkHref="#graph-up" />
                       </svg>
-                      Reports
+                      {t("page.admin.sidebar.reports")}
                     </button>
                   </li>
                   <li className="nav-item">
@@ -220,16 +197,16 @@ export const Dashboard: React.FC = () => {
                       <svg className="bi">
                         <use xlinkHref="#puzzle" />
                       </svg>
-                      Integrations
+                      {t("page.admin.sidebar.integrations")}
                     </button>
                   </li>
                 </ul>
 
                 <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
-                  <span>Saved reports</span>
+                  <span>{t("page.admin.sidebar.savedReports")}</span>
                   <button
                     className="link-secondary"
-                    aria-label="Add a new report"
+                    aria-label={t("page.admin.sidebar.addNewReport")}
                   >
                     <svg className="bi">
                       <use xlinkHref="#plus-circle" />
@@ -242,7 +219,7 @@ export const Dashboard: React.FC = () => {
                       <svg className="bi">
                         <use xlinkHref="#file-earmark-text" />
                       </svg>
-                      Current month
+                      {t("page.admin.sidebar.currentMonth")}
                     </button>
                   </li>
                   {/* ... остальные элементы опущены для краткости */}
@@ -256,7 +233,7 @@ export const Dashboard: React.FC = () => {
                       <svg className="bi">
                         <use xlinkHref="#gear-wide-connected" />
                       </svg>
-                      Settings
+                      {t("page.admin.sidebar.settings")}
                     </button>
                   </li>
                   <li className="nav-item">
@@ -264,7 +241,7 @@ export const Dashboard: React.FC = () => {
                       <svg className="bi">
                         <use xlinkHref="#door-closed" />
                       </svg>
-                      Sign out
+                      {t("page.admin.sidebar.signOut")}
                     </button>
                   </li>
                 </ul>
