@@ -19,6 +19,7 @@ import { ProductTypeDto } from "../../../../dto/ProductTypeDto";
 import { ProductSizeDto } from "../../../../dto/ProductSizeDto";
 import { ProductColorDto } from "../../../../dto/ProductColorDto";
 import { ProductConstructionInfoDto } from "../../../../dto/ProductConstructionInfoDto";
+import { useTranslation } from "react-i18next";
 
 interface InformationBlockProps {
   title: string;
@@ -34,26 +35,29 @@ const InformationBlock: React.FC<InformationBlockProps> = ({
   onToggle,
   children,
   onCreateClick,
-}) => (
-  <Paper className="p-4 mb-4">
-    <Box className="flex justify-between items-center mb-4">
-      <Box className="flex items-center">
-        <IconButton onClick={onToggle} size="small">
-          {isOpen ? <ExpandMoreIcon /> : <ExpandLessIcon />}
-        </IconButton>
-        <Typography variant="h6" className="ml-2">
-          {title}
-        </Typography>
+}) => {
+  const { t } = useTranslation();
+  return (
+    <Paper className="p-4 mb-4">
+      <Box className="flex justify-between items-center mb-4">
+        <Box className="flex items-center">
+          <IconButton onClick={onToggle} size="small">
+            {isOpen ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+          </IconButton>
+          <Typography variant="h6" className="ml-2">
+            {title}
+          </Typography>
+        </Box>
+        {isOpen && (
+          <Button variant="contained" color="primary" onClick={onCreateClick}>
+            {t("common.create")}
+          </Button>
+        )}
       </Box>
-      {isOpen && (
-        <Button variant="contained" color="primary" onClick={onCreateClick}>
-          Create
-        </Button>
-      )}
-    </Box>
-    <Collapse in={isOpen}>{children}</Collapse>
-  </Paper>
-);
+      <Collapse in={isOpen}>{children}</Collapse>
+    </Paper>
+  );
+};
 
 interface ItemBlockProps {
   onDelete: () => void;
@@ -70,6 +74,7 @@ const ItemBlock: React.FC<ItemBlockProps> = ({ onDelete, children }) => (
 );
 
 const ProductInformationManager: React.FC = () => {
+  const { t } = useTranslation();
   const protectedAxios = useProtectedAxios();
   const [typesOpen, setTypesOpen] = useState(true);
   const [sizesOpen, setSizesOpen] = useState(false);
@@ -199,7 +204,7 @@ const ProductInformationManager: React.FC = () => {
   return (
     <Box className="max-w-4xl mx-auto p-4">
       <Typography variant="h4" className="mb-6">
-        Product Information Manager
+        {t("page.products.information.title")}
       </Typography>
 
       {error && (
@@ -209,7 +214,7 @@ const ProductInformationManager: React.FC = () => {
       )}
 
       <InformationBlock
-        title="Product Types"
+        title={t("page.products.information.types.title")}
         isOpen={typesOpen}
         onToggle={() => setTypesOpen(!typesOpen)}
         onCreateClick={() => setShowNewType(true)}
@@ -226,14 +231,16 @@ const ProductInformationManager: React.FC = () => {
                     size="small"
                     value={newType}
                     onChange={(e) => setNewType(e.target.value)}
-                    placeholder="Enter type name"
+                    placeholder={t(
+                      "page.products.information.types.placeholder"
+                    )}
                   />
                   <Button
                     variant="contained"
                     onClick={handleCreateType}
                     disabled={!newType.trim()}
                   >
-                    Send
+                    {t("common.send")}
                   </Button>
                 </Box>
               </Paper>
@@ -248,7 +255,7 @@ const ProductInformationManager: React.FC = () => {
       </InformationBlock>
 
       <InformationBlock
-        title="Product Sizes"
+        title={t("page.products.information.sizes.title")}
         isOpen={sizesOpen}
         onToggle={() => setSizesOpen(!sizesOpen)}
         onCreateClick={() => setShowNewSize(true)}
@@ -265,14 +272,16 @@ const ProductInformationManager: React.FC = () => {
                     size="small"
                     value={newSize}
                     onChange={(e) => setNewSize(e.target.value)}
-                    placeholder="Enter size name"
+                    placeholder={t(
+                      "page.products.information.sizes.placeholder"
+                    )}
                   />
                   <Button
                     variant="contained"
                     onClick={handleCreateSize}
                     disabled={!newSize.trim()}
                   >
-                    Send
+                    {t("common.send")}
                   </Button>
                 </Box>
               </Paper>
@@ -287,7 +296,7 @@ const ProductInformationManager: React.FC = () => {
       </InformationBlock>
 
       <InformationBlock
-        title="Product Colors"
+        title={t("page.products.information.colors.title")}
         isOpen={colorsOpen}
         onToggle={() => setColorsOpen(!colorsOpen)}
         onCreateClick={() => setShowNewColor(true)}
@@ -314,7 +323,9 @@ const ProductInformationManager: React.FC = () => {
                     onChange={(e) =>
                       setNewColor({ ...newColor, name: e.target.value })
                     }
-                    placeholder="Enter color name"
+                    placeholder={t(
+                      "page.products.information.colors.namePlaceholder"
+                    )}
                   />
                   <TextField
                     size="small"
@@ -322,7 +333,9 @@ const ProductInformationManager: React.FC = () => {
                     onChange={(e) =>
                       setNewColor({ ...newColor, hex: e.target.value })
                     }
-                    placeholder="Enter hex color"
+                    placeholder={t(
+                      "page.products.information.colors.hexPlaceholder"
+                    )}
                   />
                   <Button
                     variant="contained"
@@ -331,7 +344,7 @@ const ProductInformationManager: React.FC = () => {
                       !newColor.name.trim() || !isValidHexColor(newColor.hex)
                     }
                   >
-                    Send
+                    {t("common.send")}
                   </Button>
                 </Box>
               </Paper>

@@ -2,6 +2,7 @@ import React from "react";
 import { Card, CardContent, CardMedia, Typography, Box } from "@mui/material";
 import { ProductCardDto } from "../../../dto/ProductCardDto";
 import ImageNotSupportedIcon from "@mui/icons-material/ImageNotSupported";
+import { useTranslation } from "react-i18next";
 
 interface ProductCardProps {
   product: ProductCardDto;
@@ -12,6 +13,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   product,
   onClick,
 }) => {
+  const { t } = useTranslation();
   return (
     <Card
       onClick={onClick}
@@ -39,12 +41,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           sx={{
             height: 200,
             display: "flex",
+            flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
             bgcolor: "grey.200",
           }}
         >
           <ImageNotSupportedIcon sx={{ fontSize: 60, color: "grey.400" }} />
+          <Typography sx={{ mt: 1, color: "grey.500" }}>
+            {t("page.products.card.imageNotAvailable")}
+          </Typography>
         </Box>
       )}
       <CardContent sx={{ flexGrow: 1 }}>

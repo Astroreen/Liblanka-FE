@@ -101,7 +101,7 @@ export const Products: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>{t("page.product.title")}</title>
+        <title>{t("page.products.title")}</title>
       </Helmet>
 
       <Box sx={{ display: "flex" }}>

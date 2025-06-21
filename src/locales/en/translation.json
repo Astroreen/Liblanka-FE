@@ -1,31 +1,148 @@
 {
-  "common.name": "Liblanka",
-  "common.slogan-end": "is your way to creating unique image",
-
-  "page.login.title": "Login",
-  "page.products.title": "Products",
-  "page.admin.dashboard.title": "Dashboard",
-
-  "page.header.home": "Home",
-  "page.header.products": "Products",
-  "page.header.about": "About",
-  "page.header.contacts": "Contacts",
-  "page.header.size": "Size",
-  "page.header.admin_panel": "Dashboard",
-
-  "page.main.title": "Main page",
-  "page.main.about.headline": "About us",
-  "page.main.about.about-us": "Liblanka is more than just a lingerie store. It is your guide to the world of luxury, comfort, and impeccable style. We offer our clients a wide range of women's and men's lingerie from leading global brands such as Acousma, Balaloum, Diorella, and Anna.",
-  "page.main.about.why-us": "Why Liblanka?",
-  "page.main.about.list.1": "Premium Quality:",
-  "page.main.about.list.1.text": "We only cooperate with trusted manufacturers who guarantee the highest quality of their products. All models in our catalog are made from the best materials using modern technologies.",
-  "page.main.about.list.2": "Wide Selection:",
-  "page.main.about.list.2.text": "At Liblanka, you will find models for every taste and body type. We offer both classic models and the latest fashion trends.",
-  "page.main.about.list.3": "Exclusive Brands:",
-  "page.main.about.list.3.text": "We offer our clients exclusive lingerie brands that are not available in other stores.",
-  "page.main.about.list.4": "Personal Approach:",
-  "page.main.about.list.4.text": "Our experienced consultants will help you choose a model that perfectly suits your style and size.",
-  "page.main.about.list.5": "Convenient Service:",
-  "page.main.about.list.5.text": "You can order the model you like online or visit our store in Vilnius. We offer various payment and delivery options.",
-  "page.products.our_products": "OUR PRODUCTS"
+  "page": {
+    "home": {
+      "title": "Liblanka"
+    },
+    "login": {
+      "title": "Login"
+    },
+    "products": {
+      "title": "Products",
+      "our_products": "Our Products",
+      "card": {
+        "imageNotAvailable": "Image not available"
+      },
+      "filter": {
+        "title": "Filters",
+        "searchByName": "Search by name",
+        "productType": "Product Type",
+        "none": "None",
+        "minPrice": "Min Price",
+        "maxPrice": "Max Price",
+        "sizes": "Sizes",
+        "selectSize": "Select size",
+        "colors": "Colors",
+        "selectColor": "Select color",
+        "clearAll": "Clear All"
+      },
+      "creation": {
+        "title": "Create new product",
+        "loading": "Loading product information...",
+        "error_loading": "Error loading product information: {{error}}",
+        "no_info": "No product information available",
+        "cancel": "Cancel",
+        "send": "Send",
+        "form": {
+          "name": "Name",
+          "name_required": "Name is required",
+          "description": "Description",
+          "price": "Price",
+          "price_required": "Valid price is required",
+          "productType": "Product Type",
+          "productType_required": "Product type is required"
+        },
+        "variants": {
+          "title": "Product Variants",
+          "table": {
+            "color": "Color",
+            "size": "Size",
+            "quantity": "Quantity",
+            "delete": "Delete"
+          },
+          "add_variant": "Add Variant"
+        },
+        "attributes": {
+          "title": "Attributes",
+          "new": "Add new attribute",
+          "placeholder": "Press Enter to add"
+        },
+        "images": {
+          "title": "Images",
+          "use_color_specific": "Use color-specific images",
+          "imagesForColor": "Images for {{colorName}} color",
+          "add_image": "Add Image"
+        }
+      },
+      "information": {
+        "title": "Product Information Manager",
+        "types": {
+          "title": "Product Types",
+          "placeholder": "Enter type name"
+        },
+        "sizes": {
+          "title": "Product Sizes",
+          "placeholder": "Enter size name"
+        },
+        "colors": {
+          "title": "Product Colors",
+          "namePlaceholder": "Enter color name",
+          "hexPlaceholder": "Enter hex color"
+        }
+      }
+    },
+    "admin": {
+      "dashboard": {
+        "title": "Dashboard",
+        "header": "Dashboard",
+        "sectionTitle": "Section title",
+        "table": {
+          "header": {
+            "number": "#",
+            "placeholder": "Header"
+          }
+        }
+      },
+      "sidebar": {
+        "companyName": "Company name",
+        "backToHome": "Back to Home",
+        "dashboard": "Dashboard",
+        "orders": "Orders",
+        "products": "Products",
+        "products_creation": "Product creation",
+        "products_informationManager": "Product information manager",
+        "customers": "Customers",
+        "reports": "Reports",
+        "integrations": "Integrations",
+        "savedReports": "Saved reports",
+        "addNewReport": "Add a new report",
+        "currentMonth": "Current month",
+        "settings": "Settings",
+        "signOut": "Sign out"
+      }
+    },
+    "header": {
+      "home": "Home",
+      "products": "Products",
+      "about": "About",
+      "contacts": "Contacts",
+      "size": "Size",
+      "admin_panel": "Dashboard"
+    },
+    "main": {
+      "title": "Main page",
+      "about": {
+        "headline": "About us",
+        "about-us": "Liblanka is more than just a lingerie store. It is your guide to the world of luxury, comfort, and impeccable style. We offer our clients a wide range of women's and men's lingerie from leading global brands such as Acousma, Balaloum, Diorella, and Anna.",
+        "why-us": "Why Liblanka?",
+        "list": {
+          "1": "Premium Quality:",
+          "1_text": "We only cooperate with trusted manufacturers who guarantee the highest quality of their products. All models in our catalog are made from the best materials using modern technologies.",
+          "2": "Wide Selection:",
+          "2_text": "At Liblanka, you will find models for every taste and body type. We offer both classic models and the latest fashion trends.",
+          "3": "Exclusive Brands:",
+          "3_text": "We offer our clients exclusive lingerie brands that are not available in other stores.",
+          "4": "Personal Approach:",
+          "4_text": "Our experienced consultants will help you choose a model that perfectly suits your style and size.",
+          "5": "Convenient Service:",
+          "5_text": "You can order the model you like online or visit our store in Vilnius. We offer various payment and delivery options."
+        }
+      }
+    }
+  },
+  "common": {
+    "name": "Liblanka",
+    "slogan-end": "is your way to creating unique image",
+    "create": "Create",
+    "send": "Send"
+  }
 }

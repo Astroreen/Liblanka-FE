@@ -31,6 +31,7 @@ import { ProductColorDto } from "../../../../dto/ProductColorDto";
 import { ProductTypeDto } from "../../../../dto/ProductTypeDto";
 import { ProductSizeDto } from "../../../../dto/ProductSizeDto";
 import { ProductConstructionInfoDto } from "../../../../dto/ProductConstructionInfoDto";
+import { useTranslation } from "react-i18next";
 
 interface ProductCreationProps {
   onCancel: () => void;
@@ -57,6 +58,7 @@ const VisuallyHiddenInput = styled("input")`
 `;
 
 const ProductCreation: React.FC<ProductCreationProps> = ({ onCancel }) => {
+  const { t } = useTranslation();
   const protectedAxios = useProtectedAxios();
   const [productInfo, setProductInfo] =
     useState<ProductConstructionInfoDto | null>(null);
@@ -256,22 +258,22 @@ const ProductCreation: React.FC<ProductCreationProps> = ({ onCancel }) => {
     }
 };
 
-  if (loading) return <Typography>Loading product information...</Typography>;
+  if (loading) return <Typography>{t("page.products.creation.loading")}</Typography>;
   if (error)
     return (
       <Typography color="error">
-        Error loading product information: {error}
+        {t("page.products.creation.error_loading", { error })}
       </Typography>
     );
   if (!productInfo)
-    return <Typography>No product information available</Typography>;
+    return <Typography>{t("page.products.creation.no_info")}</Typography>;
 
   return (
     <Box className="max-w-4xl mx-auto p-4">
       {/* Header */}
       <Box className="flex justify-between items-center mb-6">
         <Typography variant="h4" className="text-gray-800">
-          Create new product
+          {t("page.products.creation.title")}
         </Typography>
         <Box>
           <Button
@@ -280,10 +282,10 @@ const ProductCreation: React.FC<ProductCreationProps> = ({ onCancel }) => {
             variant="outlined"
             color="inherit"
           >
-            Cancel
+            {t("page.products.creation.cancel")}
           </Button>
           <Button onClick={handleSubmit} variant="contained" color="primary">
-            Send
+            {t("page.products.creation.send")}
           </Button>
         </Box>
       </Box>
@@ -292,17 +294,17 @@ const ProductCreation: React.FC<ProductCreationProps> = ({ onCancel }) => {
       <Box className="space-y-4 mb-6">
         <TextField
           fullWidth
-          label="Name"
+          label={t("page.products.creation.form.name")}
           value={name}
           onChange={(e) => setName(e.target.value)}
           error={errors.name}
-          helperText={errors.name ? "Name is required" : ""}
+          helperText={errors.name ? t("page.products.creation.form.name_required") : ""}
           className="mb-4"
         />
 
         <TextField
           fullWidth
-          label="Description"
+          label={t("page.products.creation.form.description")}
           multiline
           rows={4}
           value={description}
@@ -312,15 +314,15 @@ const ProductCreation: React.FC<ProductCreationProps> = ({ onCancel }) => {
 
         <Box className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <TextField
-            label="Price"
+            label={t("page.products.creation.form.price")}
             type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             error={errors.price}
-            helperText={errors.price ? "Valid price is required" : ""}
+            helperText={errors.price ? t("page.products.creation.form.price_required") : ""}
           />
           <FormControl error={errors.type}>
-            <InputLabel>Product Type</InputLabel>
+            <InputLabel>{t("page.products.creation.form.productType")}</InputLabel>
             <Select
               value={selectedTypeId}
               onChange={(e) => setSelectedTypeId(e.target.value as number)}
@@ -333,7 +335,7 @@ const ProductCreation: React.FC<ProductCreationProps> = ({ onCancel }) => {
               ))}
             </Select>
             {errors.type && (
-              <FormHelperText>Product type is required</FormHelperText>
+              <FormHelperText>{t("page.products.creation.form.productType_required")}</FormHelperText>
             )}
           </FormControl>
         </Box>
@@ -342,16 +344,16 @@ const ProductCreation: React.FC<ProductCreationProps> = ({ onCancel }) => {
       {/* Variants Table */}
       <Box className="mb-6">
         <Typography variant="h6" className="mb-2">
-          Product Variants
+          {t("page.products.creation.variants.title")}
         </Typography>
         <TableContainer component={Paper}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Color</TableCell>
-                <TableCell>Size</TableCell>
-                <TableCell>Quantity</TableCell>
-                <TableCell>Delete</TableCell>
+                <TableCell>{t("page.products.creation.variants.table.color")}</TableCell>
+                <TableCell>{t("page.products.creation.variants.table.size")}</TableCell>
+                <TableCell>{t("page.products.creation.variants.table.quantity")}</TableCell>
+                <TableCell>{t("page.products.creation.variants.table.delete")}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -420,22 +422,22 @@ const ProductCreation: React.FC<ProductCreationProps> = ({ onCancel }) => {
           </Table>
         </TableContainer>
         <Button startIcon={<AddIcon />} onClick={addVariant} className="mt-2">
-          Add Variant
+          {t("page.products.creation.variants.add_variant")}
         </Button>
       </Box>
 
       {/* Attributes */}
       <Box className="mb-6">
         <Typography variant="h6" className="mb-2">
-          Attributes
+          {t("page.products.creation.attributes.title")}
         </Typography>
         <TextField
           fullWidth
-          label="Add new attribute"
+          label={t("page.products.creation.attributes.new")}
           value={newAttribute}
           onChange={(e) => setNewAttribute(e.target.value)}
           onKeyDown={handleAddAttribute}
-          placeholder="Press Enter to add"
+          placeholder={t("page.products.creation.attributes.placeholder")}
           size="small"
         />
         <Box className="flex flex-wrap gap-2 mt-2">
@@ -454,7 +456,7 @@ const ProductCreation: React.FC<ProductCreationProps> = ({ onCancel }) => {
       {/* Images */}
       <Box className="mb-6">
         <Box className="flex justify-between items-center mb-4">
-          <Typography variant="h6">Images</Typography>
+          <Typography variant="h6">{t("page.products.creation.images.title")}</Typography>
           <FormControlLabel
             control={
               <Checkbox
@@ -462,7 +464,7 @@ const ProductCreation: React.FC<ProductCreationProps> = ({ onCancel }) => {
                 onChange={(e) => setUseColorSpecificImages(e.target.checked)}
               />
             }
-            label="Use color-specific images"
+            label={t("page.products.creation.images.use_color_specific")}
           />
         </Box>
 
@@ -472,13 +474,12 @@ const ProductCreation: React.FC<ProductCreationProps> = ({ onCancel }) => {
             ?.map((color) => (
               <Box key={color} className="mb-4">
                 <Typography variant="subtitle1" className="mb-2">
-                  Images for{" "}
-                  {
-                    productInfo.colors?.find(
-                      (c: ProductColorDto) => c.id?.toString() === color?.toString()
-                    )?.name
-                  }{" "}
-                  color
+                  {t("page.products.creation.images.imagesForColor", {
+                    colorName:
+                      productInfo.colors?.find(
+                        (c: ProductColorDto) => c.id?.toString() === color?.toString()
+                      )?.name || "",
+                  })}
                 </Typography>
                 <Button
                   component="label"
@@ -486,7 +487,7 @@ const ProductCreation: React.FC<ProductCreationProps> = ({ onCancel }) => {
                   startIcon={<CloudUploadIcon />}
                   className="mb-2"
                 >
-                  Add Image
+                  {t("page.products.creation.images.add_image")}
                   <VisuallyHiddenInput
                     type="file"
                     multiple
@@ -517,7 +518,7 @@ const ProductCreation: React.FC<ProductCreationProps> = ({ onCancel }) => {
               startIcon={<CloudUploadIcon />}
               className="mb-2"
             >
-              Add Image
+              {t("page.products.creation.images.add_image")}
               <VisuallyHiddenInput
                 type="file"
                 multiple
