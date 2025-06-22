@@ -108,37 +108,43 @@ export const Products: React.FC = () => {
         <ProductFilter onFilterChange={handleFilterChange} />
 
         <Container maxWidth="xl" sx={{ py: 4 }}>
-          <Box sx={{ display: "flex", alignItems: "center", mb: 5, position: "relative" }}>
-            <Box sx={{ position: "absolute", left: 100, top: 12, width: "fit-content", height: "fit-content" }}>
-              <Button
-                onClick={() => (window.location.href = "/")}
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  p: 0,
-                  width: "fit-content",
-                  minWidth: 0,
-                  background: "none",
-                  boxShadow: "none",
-                  '&:hover': { background: "none", boxShadow: "none" }
-                }}
-              >
-                <Logo />
-              </Button>
+          <Box sx={{
+            display: 'flex',
+            justifyContent: 'space-evenly',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: 2,
+            width: '100%',
+            mb: 5,
+          }}>
+            <Button
+              onClick={() => (window.location.href = "/")}
+              sx={{
+                background: "none",
+                boxShadow: "none",
+                p: 0,
+                "&:hover": { background: "none" },
+              }}
+            >
+              <Logo />
+            </Button>
+            <Typography
+              variant="h4"
+              component="h1"
+              align="center"
+              sx={{
+                fontWeight: "bold",
+                letterSpacing: 2,
+                whiteSpace: "nowrap",
+                flex: '1 1 auto',
+                minWidth: 'fit-content',
+              }}
+            >
+              {t("page.products.our_products")}
+            </Typography>
+            <Box sx = {{ minWidth: 173.67, display: "flex", justifyContent: "center" }}>
+              <LanguageSwitcher />
             </Box>
-            <Box sx={{ flex: 1, display: "flex", justifyContent: "center" }}>
-              <Typography
-                variant="h4"
-                component="h1"
-                gutterBottom
-                align="center"
-                sx={{ fontWeight: "bold", letterSpacing: 2 }}
-              >
-                {t("page.products.our_products")}
-              </Typography>
-            </Box>
-
-            <LanguageSwitcher/>
           </Box>
 
           {error && (

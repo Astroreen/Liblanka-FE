@@ -2,7 +2,7 @@ import React, {useEffect, useReducer} from "react";
 import {useAuthContext} from "../../contexts/AuthContext";
 import "./Login.css";
 import {initialLoginState, LoginAction, loginReducer, LoginStatus,} from "../../reducers/loginReducer";
-import {Alert, Fade} from "@mui/material";
+import {Alert, Fade, Box} from "@mui/material";
 import {Loader} from "../../components/loader/Loader";
 import {AuthForm, AuthFormProps} from "../../components/authForm/AuthForm";
 import {useNavigate} from "react-router-dom";
@@ -113,7 +113,9 @@ export const Login = () => {
 
     return (
         <>
-            <Logo />
+            <Box sx={{ marginTop: 2, marginLeft: 2, position: "absolute"}}>
+                <Logo />
+            </Box>
             <div className="login-container">
                 {renderContent()}
                 {renderErrorPopup(message)}
