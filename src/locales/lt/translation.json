@@ -86,6 +86,13 @@
           "title": "Produktų spalvos",
           "namePlaceholder": "Įveskite spalvos pavadinimą",
           "hexPlaceholder": "Įveskite šešioliktainį spalvos kodą"
+        },
+        "replacement": {
+          "title": "Pakeisti elementą",
+          "description": "Šis elementas naudojamas esamuose produktuose. Prieš ištrindami, pasirinkite pakaitalą.",
+          "selectReplacement": "Pasirinkite pakaitalą",
+          "confirm": "Patvirtinti ištrynimą",
+          "cancel": "Atšaukti"
         }
       }
     },

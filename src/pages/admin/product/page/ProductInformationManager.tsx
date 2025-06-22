@@ -20,6 +20,7 @@ import { ProductSizeDto } from "../../../../dto/ProductSizeDto";
 import { ProductColorDto } from "../../../../dto/ProductColorDto";
 import { ProductConstructionInfoDto } from "../../../../dto/ProductConstructionInfoDto";
 import { useTranslation } from "react-i18next";
+import ReplacementDialog from "../../../../components/replacementDialog/ReplacementDialog";
 
 interface InformationBlockProps {
   title: string;
@@ -99,6 +100,11 @@ const ProductInformationManager: React.FC = () => {
   const [colors, setColors] = useState<ProductColorDto[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Replacement dialog states
+  const [replacementDialogOpen, setReplacementDialogOpen] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState<any>(null);
+  const [deleteType, setDeleteType] = useState<"type" | "size" | "color">("type");
+
   // Fetch initial data
   useEffect(() => {
     const fetchData = async () => {
@@ -171,29 +177,94 @@ const ProductInformationManager: React.FC = () => {
   };
 
   const handleDeleteType = async (type: ProductTypeDto) => {
-    try {
-      await protectedAxios.delete(ENDPOINTS.product_types, { data: type });
-      setTypes(types.filter((t) => t.id !== type.id));
-    } catch (err: any) {
-      setError(err.message);
-    }
+    setItemToDelete(type);
+    setDeleteType("type");
+    setReplacementDialogOpen(true);
   };
 
   const handleDeleteSize = async (size: ProductSizeDto) => {
+    setItemToDelete(size);
+    setDeleteType("size");
+    setReplacementDialogOpen(true);
+  };
+
+  const handleDeleteColor = async (color: ProductColorDto) => {
+    setItemToDelete(color);
+    setDeleteType("color");
+    setReplacementDialogOpen(true);
+  };
+
+  const handleReplacementConfirm = async (replacementId: number) => {
     try {
-      await protectedAxios.delete(ENDPOINTS.product_sizes, { data: size });
-      setSizes(sizes.filter((s) => s.id !== size.id));
+      const replacementItem = getReplacementItem(replacementId);
+      if (!replacementItem) {
+        setError("Replacement item not found");
+        return;
+      }
+
+      const requestData = {
+        itemToDelete: itemToDelete,
+        replacementItem: replacementItem,
+      };
+
+      let endpoint = "";
+      switch (deleteType) {
+        case "type":
+          endpoint = ENDPOINTS.product_types;
+          break;
+        case "size":
+          endpoint = ENDPOINTS.product_sizes;
+          break;
+        case "color":
+          endpoint = ENDPOINTS.product_colors;
+          break;
+      }
+
+      await protectedAxios.delete(endpoint, { data: requestData });
+
+      // Update local state
+      switch (deleteType) {
+        case "type":
+          setTypes(types.filter((t) => t.id !== itemToDelete.id));
+          break;
+        case "size":
+          setSizes(sizes.filter((s) => s.id !== itemToDelete.id));
+          break;
+        case "color":
+          setColors(colors.filter((c) => c.id !== itemToDelete.id));
+          break;
+      }
+
+      setReplacementDialogOpen(false);
+      setItemToDelete(null);
     } catch (err: any) {
       setError(err.message);
     }
   };
 
-  const handleDeleteColor = async (color: ProductColorDto) => {
-    try {
-      await protectedAxios.delete(ENDPOINTS.product_colors, { data: color });
-      setColors(colors.filter((c) => c.id !== color.id));
-    } catch (err: any) {
-      setError(err.message);
+  const getReplacementItem = (replacementId: number) => {
+    switch (deleteType) {
+      case "type":
+        return types.find((t) => t.id === replacementId);
+      case "size":
+        return sizes.find((s) => s.id === replacementId);
+      case "color":
+        return colors.find((c) => c.id === replacementId);
+      default:
+        return null;
+    }
+  };
+
+  const getItemsForReplacement = () => {
+    switch (deleteType) {
+      case "type":
+        return types;
+      case "size":
+        return sizes;
+      case "color":
+        return colors;
+      default:
+        return [];
     }
   };
 
@@ -373,6 +444,18 @@ const ProductInformationManager: React.FC = () => {
           </Box>
         )}
       </InformationBlock>
+
+      <ReplacementDialog
+        open={replacementDialogOpen}
+        onClose={() => {
+          setReplacementDialogOpen(false);
+          setItemToDelete(null);
+        }}
+        onConfirm={handleReplacementConfirm}
+        items={getItemsForReplacement()}
+        itemToDelete={itemToDelete}
+        type={deleteType}
+      />
     </Box>
   );
 };

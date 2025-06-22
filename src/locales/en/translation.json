@@ -79,6 +79,13 @@
           "title": "Product Colors",
           "namePlaceholder": "Enter color name",
           "hexPlaceholder": "Enter hex color"
+        },
+        "replacement": {
+          "title": "Replace Item",
+          "description": "This item is used in existing products. Please select a replacement before deleting.",
+          "selectReplacement": "Select replacement",
+          "confirm": "Confirm Delete",
+          "cancel": "Cancel"
         }
       }
     },

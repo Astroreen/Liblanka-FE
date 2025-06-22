@@ -20,7 +20,6 @@ import { ProductSizeDto } from "../../../dto/ProductSizeDto";
 import { ProductColorDto } from "../../../dto/ProductColorDto";
 import { useProtectedAxios } from "../../../hooks/useProtectedAxios";
 import { ENDPOINTS } from "../../../api/apiConfig";
-import { useTheme } from "@mui/material/styles";
 import { useTranslation } from "react-i18next";
 
 interface FilterParams {
@@ -59,7 +58,6 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
   // Debounce timer
   const [searchTimer, setSearchTimer] = useState<NodeJS.Timeout | null>(null);
 
-  const theme = useTheme();
   const sidebarWidth = 250;
 
   useEffect(() => {
@@ -125,7 +123,6 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
     selectedColors,
     minPrice,
     maxPrice,
-    onFilterChange,
   ]);
 
   const handleSizeSelect = (sizeId: number) => {

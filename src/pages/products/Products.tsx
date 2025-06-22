@@ -88,7 +88,9 @@ export const Products: React.FC = () => {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line
     fetchProducts({ page: 0, pageSize: 20 });
+    // eslint-disable-next-line
   }, []);
 
   const handleProductClick = (productId: number) => {
