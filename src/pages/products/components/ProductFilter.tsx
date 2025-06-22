@@ -116,6 +116,7 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
         clearTimeout(searchTimer);
       }
     };
+    // eslint-disable-next-line
   }, [
     searchName,
     selectedType,
