@@ -30,7 +30,9 @@
         "selectSize": "Pasirinkite dydį",
         "colors": "Spalvos",
         "selectColor": "Pasirinkite spalvą",
-        "clearAll": "Išvalyti viską"
+        "clearAll": "Išvalyti viską",
+        "price_error": "Maksimali kaina negali būti mažesnė už minimalią",
+        "negative_price_error": "Kaina negali būti neigiama"
       },
       "creation": {
         "title": "Sukurti naują produktą",
@@ -115,8 +117,9 @@
         "currentMonth": "Einamasis mėnuo",
         "settings": "Nustatymai",
         "signOut": "Atsijungti"
-      },
-      "header": {
+      }
+    },
+    "header": {
         "home": "Pagrindinis",
         "products": "Produktai",
         "about": "Apie mus",
@@ -124,27 +127,6 @@
         "size": "Dydis",
         "admin_panel": "Valdymo skydas"
       },
-      "main": {
-        "title": "Pagrindinis puslapis",
-        "about": {
-          "headline": "Apie mus",
-          "about-us": "Liblanka – tai daugiau nei apatinio trikotažo parduotuvė. Tai jūsų vedlys į prabangos, komforto ir nepriekaištingo stiliaus pasaulį. Savo klientams siūlome platų moteriško ir vyriško apatinio trikotažo asortimentą iš pirmaujančių pasaulio prekių ženklų, tokių kaip Acousma, Balaloum, Diorella ir Anna.",
-          "why-us": "Kodėl Liblanka?",
-          "list": {
-            "1": "Aukščiausia kokybė:",
-            "1_text": "Bendradarbiaujame tik su patikimais gamintojais, kurie garantuoja aukščiausią savo gaminių kokybę. Visi modeliai mūsų kataloge pagaminti iš geriausių medžiagų, naudojant modernias technologijas.",
-            "2": "Platus pasirinkimas:",
-            "2_text": "Liblankoje rasite modelių kiekvienam skoniui ir figūros tipui. Siūlome tiek klasikinius modelius, tiek naujausias mados tendencijas.",
-            "3": "Išskirtiniai prekių ženklai:",
-            "3_text": "Savo klientams siūlome išskirtinius apatinio trikotažo prekių ženklus, kurių nerasite kitose parduotuvėse.",
-            "4": "Asmeninis požiūris:",
-            "4_text": "Mūsų patyrę konsultantai padės jums išsirinkti modelį, kuris puikiai atitiks jūsų stilių ir dydį.",
-            "5": "Patogus aptarnavimas:",
-            "5_text": "Galite užsisakyti patikusį modelį internetu arba apsilankyti mūsų parduotuvėje Vilniuje. Siūlome įvairius mokėjimo ir pristatymo būdus."
-          }
-        }
-      }
-    },
     "main": {
       "title": "Pagrindinis puslapis",
       "about": {
@@ -212,7 +194,9 @@
       "selectSize": "Pasirinkite dydį",
       "colors": "Spalvos",
       "selectColor": "Pasirinkite spalvą",
-      "clearAll": "Išvalyti viską"
+      "clearAll": "Išvalyti viską",
+      "price_error": "Maksimali kaina negali būti mažesnė už minimalią",
+      "negative_price_error": "Kaina negali būti neigiama"
     }
   }
 }

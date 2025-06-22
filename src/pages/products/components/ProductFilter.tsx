@@ -11,6 +11,7 @@ import {
   Typography,
   Button,
   CircularProgress,
+  FormHelperText,
 } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import CloseIcon from "@mui/icons-material/Close";
@@ -53,6 +54,7 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
   const [selectedColors, setSelectedColors] = useState<number[]>([]);
   const [minPrice, setMinPrice] = useState<string>("");
   const [maxPrice, setMaxPrice] = useState<string>("");
+  const [priceErrorKey, setPriceErrorKey] = useState<string | null>(null);
 
   // Debounce timer
   const [searchTimer, setSearchTimer] = useState<NodeJS.Timeout | null>(null);
@@ -79,8 +81,23 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
 
   // Debounced filter update
   useEffect(() => {
+    const min = parseFloat(minPrice);
+    const max = parseFloat(maxPrice);
+    let currentErrorKey: string | null = null;
+
+    if ((!isNaN(min) && min < 0) || (!isNaN(max) && max < 0)) {
+      currentErrorKey = "page.products.filter.negative_price_error";
+    } else if (!isNaN(min) && !isNaN(max) && min > max) {
+      currentErrorKey = "page.products.filter.price_error";
+    }
+    setPriceErrorKey(currentErrorKey);
+
     if (searchTimer) {
       clearTimeout(searchTimer);
+    }
+
+    if (currentErrorKey) {
+      return;
     }
 
     const timer = setTimeout(() => {
@@ -108,6 +125,7 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
     selectedColors,
     minPrice,
     maxPrice,
+    onFilterChange,
   ]);
 
   const handleSizeSelect = (sizeId: number) => {
@@ -207,21 +225,30 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
                 ))}
               </Select>
             </FormControl>
-            <Box sx={{ mt: 2, display: "flex", gap: 1 }}>
-              <TextField
-                label={t("page.products.filter.minPrice")}
-                type="number"
-                value={minPrice}
-                onChange={(e) => setMinPrice(e.target.value)}
-                sx={{ flex: 1 }}
-              />
-              <TextField
-                label={t("page.products.filter.maxPrice")}
-                type="number"
-                value={maxPrice}
-                onChange={(e) => setMaxPrice(e.target.value)}
-                sx={{ flex: 1 }}
-              />
+            <Box sx={{ mt: 2 }}>
+              <FormControl fullWidth>
+                <Box sx={{ display: "flex", gap: 1 }}>
+                  <TextField
+                    label={t("page.products.filter.minPrice")}
+                    type="number"
+                    value={minPrice}
+                    onChange={(e) => setMinPrice(e.target.value)}
+                    sx={{ flex: 1 }}
+                    error={!!priceErrorKey}
+                  />
+                  <TextField
+                    label={t("page.products.filter.maxPrice")}
+                    type="number"
+                    value={maxPrice}
+                    onChange={(e) => setMaxPrice(e.target.value)}
+                    sx={{ flex: 1 }}
+                    error={!!priceErrorKey}
+                  />
+                </Box>
+                {priceErrorKey && (
+                  <FormHelperText error>{t(priceErrorKey)}</FormHelperText>
+                )}
+              </FormControl>
             </Box>
             <Box sx={{ mt: 2 }}>
               <Typography variant="subtitle2" gutterBottom>
@@ -248,15 +275,13 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
                   <MenuItem value="" disabled>
                     {t("page.products.filter.selectSize")}
                   </MenuItem>
-                  {sizes.map((size: ProductSizeDto) => (
-                    <MenuItem
-                      key={size.id}
-                      value={size.id}
-                      disabled={selectedSizes.includes(Number(size.id))}
-                    >
-                      {size.name}
-                    </MenuItem>
-                  ))}
+                  {sizes
+                    .filter((size: ProductSizeDto) => size.id !== undefined && !selectedSizes.includes(size.id))
+                    .map((size: ProductSizeDto) => (
+                      <MenuItem key={size.id} value={size.id}>
+                        {size.name}
+                      </MenuItem>
+                    ))}
                 </Select>
               </FormControl>
             </Box>
@@ -297,25 +322,25 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
                   <MenuItem value="" disabled>
                     {t("page.products.filter.selectColor")}
                   </MenuItem>
-                  {colors.map((color: ProductColorDto) => (
-                    <MenuItem
-                      key={color.id}
-                      value={color.id}
-                      disabled={selectedColors.includes(Number(color.id))}
-                    >
-                      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  {colors
+                    .filter((color: ProductColorDto) => color.id !== undefined && !selectedColors.includes(color.id))
+                    .map((color: ProductColorDto) => (
+                      <MenuItem key={color.id} value={color.id}>
                         <Box
-                          sx={{
-                            width: "22px",
-                            height: "22px",
-                            borderRadius: "50%",
-                            backgroundColor: color.hex,
-                          }}
-                        />
-                        {color.name}
-                      </Box>
-                    </MenuItem>
-                  ))}
+                          sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                        >
+                          <Box
+                            sx={{
+                              width: "22px",
+                              height: "22px",
+                              borderRadius: "50%",
+                              backgroundColor: color.hex,
+                            }}
+                          />
+                          {color.name}
+                        </Box>
+                      </MenuItem>
+                    ))}
                 </Select>
               </FormControl>
             </Box>

@@ -23,7 +23,9 @@
         "selectSize": "Select size",
         "colors": "Colors",
         "selectColor": "Select color",
-        "clearAll": "Clear All"
+        "clearAll": "Clear All",
+        "price_error": "Max price cannot be less than min price",
+        "negative_price_error": "Price cannot be negative"
       },
       "creation": {
         "title": "Create new product",

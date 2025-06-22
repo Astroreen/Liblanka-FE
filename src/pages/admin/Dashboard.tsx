@@ -80,7 +80,7 @@ export const Dashboard: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>{t("page.page.admin.dashboard.title")}</title>
+        <title>{t("page.admin.dashboard.title")}</title>
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
