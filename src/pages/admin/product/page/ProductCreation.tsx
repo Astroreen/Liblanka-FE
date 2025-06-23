@@ -232,17 +232,24 @@ const ProductCreation: React.FC<ProductCreationProps> = ({ onCancel }) => {
     return { images, colorId };
   };
 
-  // Helper to check if the form is valid (all required fields filled and valid)
+  // 1. Pure validation function
+  const validateForm = () => ({
+    name: name.trim() === "",
+    price: isNaN(Number(price)) || Number(price) <= 0,
+    type: selectedTypeId === "",
+    variants: variants.some((v) => !v.colorId || !v.sizeId || v.quantity <= 0),
+  });
+
+  // 2. useEffect to update errors when relevant fields change
+  useEffect(() => {
+    setErrors(validateForm());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [name, price, selectedTypeId, variants]);
+
+  // 3. isFormValid uses the errors state
   const isFormValid = () => {
     if (imageError) return false;
-    if (name.trim() === "") return false;
-    if (isNaN(Number(price)) || Number(price) <= 0) return false;
-    if (selectedTypeId === "") return false;
-    if (!variants || variants.length === 0) return false;
-    for (const v of variants) {
-      if (!v.colorId || !v.sizeId || v.quantity <= 0) return false;
-    }
-    return true;
+    return !Object.values(errors).some((error) => error);
   };
 
   const handleSubmit = async () => {
