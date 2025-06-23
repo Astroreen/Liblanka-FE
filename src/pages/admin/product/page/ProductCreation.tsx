@@ -32,6 +32,8 @@ import { ProductTypeDto } from "../../../../dto/ProductTypeDto";
 import { ProductSizeDto } from "../../../../dto/ProductSizeDto";
 import { ProductConstructionInfoDto } from "../../../../dto/ProductConstructionInfoDto";
 import { useTranslation } from "react-i18next";
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 interface ProductCreationProps {
   onCancel: () => void;
@@ -46,6 +48,18 @@ interface ProductVariant {
 interface ColorImages {
   [color: string]: File[];
 }
+
+// Supported image MIME types for webp conversion
+const SUPPORTED_IMAGE_TYPES = [
+  'image/jpeg',
+  'image/png',
+  'image/gif',
+  'image/bmp',
+  'image/tiff',
+];
+
+// Helper to check if file is a supported image
+const isSupportedImageType = (file: File) => SUPPORTED_IMAGE_TYPES.includes(file.type);
 
 const VisuallyHiddenInput = styled("input")`
   clip: rect(0 0 0 0);
@@ -78,6 +92,7 @@ const ProductCreation: React.FC<ProductCreationProps> = ({ onCancel }) => {
   const [colorImages, setColorImages] = useState<ColorImages>({});
   const [useColorSpecificImages, setUseColorSpecificImages] = useState(true);
   const [generalImages, setGeneralImages] = useState<File[]>([]);
+  const [imageError, setImageError] = useState<string>("");
 
   // Validation state
   const [errors, setErrors] = useState({
@@ -86,6 +101,9 @@ const ProductCreation: React.FC<ProductCreationProps> = ({ onCancel }) => {
     type: false,
     variants: false,
   });
+
+  const [serverError, setServerError] = useState<string>("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   // Fetch product information
   useEffect(() => {
@@ -150,6 +168,14 @@ const ProductCreation: React.FC<ProductCreationProps> = ({ onCancel }) => {
   // Handle image upload for color-specific mode
   const handleColorImageUpload = (color: string, files: FileList | null) => {
     if (files) {
+      const unsupported = Array.from(files).filter((file) => !isSupportedImageType(file));
+      if (unsupported.length > 0) {
+        setImageError(
+          `Unsupported image format: ${unsupported.map(f => f.name).join(', ')}. Allowed: JPEG, PNG, GIF, BMP, TIFF.`
+        );
+        return;
+      }
+      setImageError("");
       setColorImages((prev) => ({
         ...prev,
         [color]: [...(prev[color] || []), ...Array.from(files)],
@@ -160,6 +186,14 @@ const ProductCreation: React.FC<ProductCreationProps> = ({ onCancel }) => {
   // Handle image upload for general mode
   const handleGeneralImageUpload = (files: FileList | null) => {
     if (files) {
+      const unsupported = Array.from(files).filter((file) => !isSupportedImageType(file));
+      if (unsupported.length > 0) {
+        setImageError(
+          `Unsupported image format: ${unsupported.map(f => f.name).join(', ')}. Allowed: JPEG, PNG, GIF, BMP, TIFF.`
+        );
+        return;
+      }
+      setImageError("");
       setGeneralImages((prev) => [...prev, ...Array.from(files)]);
     }
   };
@@ -198,20 +232,21 @@ const ProductCreation: React.FC<ProductCreationProps> = ({ onCancel }) => {
     return { images, colorId };
   };
 
-  // Validate form
-  const validateForm = (): boolean => {
-    const newErrors = {
-      name: name.trim() === "",
-      price: isNaN(Number(price)) || Number(price) <= 0,
-      type: selectedTypeId === "",
-      variants: variants.some((v) => !v.colorId || !v.sizeId || v.quantity <= 0),
-    };
-    setErrors(newErrors);
-    return !Object.values(newErrors).some((error) => error);
+  // Helper to check if the form is valid (all required fields filled and valid)
+  const isFormValid = () => {
+    if (imageError) return false;
+    if (name.trim() === "") return false;
+    if (isNaN(Number(price)) || Number(price) <= 0) return false;
+    if (selectedTypeId === "") return false;
+    if (!variants || variants.length === 0) return false;
+    for (const v of variants) {
+      if (!v.colorId || !v.sizeId || v.quantity <= 0) return false;
+    }
+    return true;
   };
 
   const handleSubmit = async () => {
-    if (!validateForm()) return;
+    if (!isFormValid() || imageError) return;
 
     const { images, colorId } = prepareImageData();
 
@@ -253,8 +288,15 @@ const ProductCreation: React.FC<ProductCreationProps> = ({ onCancel }) => {
             console.log('Product created successfully');
             onCancel();
         }
-    } catch (error) {
-        console.error('Error creating product:', error);
+    } catch (error: any) {
+        let message = 'Error creating product';
+        if (error.response && error.response.data && typeof error.response.data === 'string') {
+            message = error.response.data;
+        } else if (error.message) {
+            message = error.message;
+        }
+        setServerError(message);
+        setOpenSnackbar(true);
     }
 };
 
@@ -284,7 +326,7 @@ const ProductCreation: React.FC<ProductCreationProps> = ({ onCancel }) => {
           >
             {t("page.products.creation.cancel")}
           </Button>
-          <Button onClick={handleSubmit} variant="contained" color="primary">
+          <Button onClick={handleSubmit} variant="contained" color="primary" disabled={!isFormValid()}>
             {t("page.products.creation.send")}
           </Button>
         </Box>
@@ -539,6 +581,16 @@ const ProductCreation: React.FC<ProductCreationProps> = ({ onCancel }) => {
           </Box>
         )}
       </Box>
+
+      {imageError && (
+        <Typography color="error" sx={{ mb: 2, fontWeight: 'bold' }}>{imageError}</Typography>
+      )}
+
+      <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={() => setOpenSnackbar(false)}>
+        <MuiAlert elevation={6} variant="filled" onClose={() => setOpenSnackbar(false)} severity="error">
+          {serverError}
+        </MuiAlert>
+      </Snackbar>
     </Box>
   );
 };
