@@ -38,18 +38,6 @@ const validateForm = (form: ProductDto): FormErrors => ({
 
 const isFormValid = (errors: FormErrors) => !Object.values(errors).some(Boolean);
 
-function getAllImagesForEdit(form: ProductDto | null) {
-  // Unbound images
-  const images = form?.imageData ? [...form.imageData] : [];
-  // Images bound to colors
-  if (form?.imagesByColor) {
-    Object.values(form.imagesByColor).forEach(arr => {
-      if (Array.isArray(arr)) images.push(...arr);
-    });
-  }
-  return images;
-}
-
 // Utility to get a unique key for each image
 const getImageKey = (img: any, idx: number, isNew: boolean = false) => {
   if (img && img?.id) return `id-${img?.id}`;
