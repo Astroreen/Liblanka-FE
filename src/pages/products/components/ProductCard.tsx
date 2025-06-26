@@ -32,7 +32,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         <CardMedia
           component="img"
           height="200"
-          image={`data:image/jpeg;base64,${product.imageData}`}
+          image={`data:image/webp;base64,${product.imageData}`}
           alt={product.name}
           sx={{ objectFit: "cover" }}
         />

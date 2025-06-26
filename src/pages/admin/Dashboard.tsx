@@ -173,6 +173,9 @@ export const Dashboard: React.FC = () => {
                       <MenuItem onClick={handleProductInformation}>
                         {t("page.admin.sidebar.products_informationManager")}
                       </MenuItem>
+                      <MenuItem onClick={() => { window.location.href = "/products"; }}>
+                        {t("page.admin.sidebar.products_manage")}
+                      </MenuItem>
                     </Menu>
                   </li>
                   {/* Остальные элементы боковой панели остаются без изменений */}

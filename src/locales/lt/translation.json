@@ -94,6 +94,35 @@
           "confirm": "Patvirtinti ištrynimą",
           "cancel": "Atšaukti"
         }
+      },
+      "details": {
+        "notFound": "Produktas nerastas.",
+        "thumbnailAlt": "miniatiūra",
+        "mainImageAlt": "pagrindinė nuotrauka",
+        "addImage": "Pridėti nuotrauką",
+        "deleteImage": "Ištrinti nuotrauką",
+        "name": "Pavadinimas",
+        "nameRequired": "Pavadinimas yra privalomas",
+        "description": "Aprašymas",
+        "price": "Kaina",
+        "priceRequired": "Kaina turi būti teigiama",
+        "type": "Tipas",
+        "attributes": "Atributai",
+        "addAttribute": "Pridėti atributą",
+        "add": "Pridėti",
+        "colors": "Spalvos",
+        "sizes": "Dydžiai",
+        "quantity": "Kiekis",
+        "variants": "Variantai",
+        "color": "Spalva",
+        "size": "Dydis",
+        "delete": "Ištrinti",
+        "addVariant": "Pridėti variantą",
+        "cancel": "Atšaukti",
+        "send": "Siųsti",
+        "imageFormatError": "Nepalaikomas paveikslėlio formatas",
+        "confirmDelete": "Ar tikrai norite ištrinti šį produktą?",
+        "descriptionLabel": "Aprašymas:"
       }
     },
     "admin": {
@@ -123,7 +152,8 @@
         "addNewReport": "Pridėti naują ataskaitą",
         "currentMonth": "Einamasis mėnuo",
         "settings": "Nustatymai",
-        "signOut": "Atsijungti"
+        "signOut": "Atsijungti",
+        "products_manage": "Tvarkyti produktus"
       }
     },
     "header": {

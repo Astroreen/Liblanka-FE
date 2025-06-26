@@ -87,6 +87,35 @@
           "confirm": "Подтвердить удаление",
           "cancel": "Отмена"
         }
+      },
+      "details": {
+        "notFound": "Товар не найден.",
+        "thumbnailAlt": "миниатюра",
+        "mainImageAlt": "главное изображение",
+        "addImage": "Добавить изображение",
+        "deleteImage": "Удалить изображение",
+        "name": "Название",
+        "nameRequired": "Название обязательно",
+        "description": "Описание",
+        "price": "Цена",
+        "priceRequired": "Цена должна быть положительной",
+        "type": "Тип",
+        "attributes": "Атрибуты",
+        "addAttribute": "Добавить атрибут",
+        "add": "Добавить",
+        "colors": "Цвета",
+        "sizes": "Размеры",
+        "quantity": "Количество",
+        "variants": "Варианты",
+        "color": "Цвет",
+        "size": "Размер",
+        "delete": "Удалить",
+        "addVariant": "Добавить вариант",
+        "cancel": "Отмена",
+        "send": "Отправить",
+        "imageFormatError": "Неподдерживаемый формат изображения",
+        "confirmDelete": "Вы уверены, что хотите удалить этот товар?",
+        "descriptionLabel": "Описание:"
       }
     },
     "admin": {
@@ -109,6 +138,7 @@
         "products": "Товары",
         "products_creation": "Создание товара",
         "products_informationManager": "Менеджер информации о товарах",
+        "products_manage": "Управление товаром",
         "customers": "Клиенты",
         "reports": "Отчеты",
         "integrations": "Интеграции",

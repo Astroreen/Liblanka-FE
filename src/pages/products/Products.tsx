@@ -16,6 +16,7 @@ import { ENDPOINTS } from "../../api/apiConfig";
 import { Logo } from "../../components/logo/Logo";
 import Button from "@mui/material/Button";
 import LanguageSwitcher from "../../components/languageSwitcher/LanguageSwitcher";
+import { useNavigate } from "react-router-dom";
 
 interface FilterParams {
   name?: string;
@@ -45,6 +46,7 @@ export const Products: React.FC = () => {
   const [currentFilter, setCurrentFilter] = useState<
     Omit<FilterParams, "page" | "pageSize">
   >({});
+  const navigate = useNavigate();
 
   const fetchProducts = async (params: FilterParams) => {
     try {
@@ -94,10 +96,7 @@ export const Products: React.FC = () => {
   }, []);
 
   const handleProductClick = (productId: number) => {
-    // For now, navigate back to home
-    window.location.href = "/";
-    // Later, this will be:
-    // window.location.href = `/storage/products/${productId}`;
+    navigate(`/products/${productId}`);
   };
 
   return (

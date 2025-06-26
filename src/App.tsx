@@ -12,6 +12,7 @@ import {Login} from "./pages/login/Login";
 import {AuthProvider} from "./contexts/AuthContext";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import {Dashboard} from "./pages/admin/Dashboard";
+import ProductDetails from "./pages/products/page/ProductDetails";
 
 const resources = {
     en: {
@@ -42,6 +43,7 @@ function App() {
                 <Routes>
                     <Route path={RoutePath.HOME} element={<Home/>}/>
                     <Route path={RoutePath.PRODUCTS} element={<Products/>}></Route>
+                    <Route path="/products/:id" element={<ProductDetails />} />
                     <Route path={RoutePath.LOGIN} element={<Login/>}></Route>
 
                     <Route path={RoutePath.ADMIN_PANEL} element={

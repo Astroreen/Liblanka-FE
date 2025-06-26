@@ -87,6 +87,35 @@
           "confirm": "Confirm Delete",
           "cancel": "Cancel"
         }
+      },
+      "details": {
+        "notFound": "Product not found.",
+        "thumbnailAlt": "thumbnail",
+        "mainImageAlt": "main image",
+        "addImage": "Add Image",
+        "deleteImage": "Delete Image",
+        "name": "Name",
+        "nameRequired": "Name is required",
+        "description": "Description",
+        "price": "Price",
+        "priceRequired": "Price must be positive",
+        "type": "Type",
+        "attributes": "Attributes",
+        "addAttribute": "Add attribute",
+        "add": "Add",
+        "colors": "Colors",
+        "sizes": "Sizes",
+        "quantity": "Quantity",
+        "variants": "Variants",
+        "color": "Color",
+        "size": "Size",
+        "delete": "Delete",
+        "addVariant": "Add Variant",
+        "cancel": "Cancel",
+        "send": "Send",
+        "imageFormatError": "Unsupported image format",
+        "confirmDelete": "Are you sure you want to delete this product?",
+        "descriptionLabel": "Description:"
       }
     },
     "admin": {
@@ -109,6 +138,7 @@
         "products": "Products",
         "products_creation": "Product creation",
         "products_informationManager": "Product information manager",
+        "products_manage": "Manage products",
         "customers": "Customers",
         "reports": "Reports",
         "integrations": "Integrations",
