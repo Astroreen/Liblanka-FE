@@ -4,6 +4,7 @@ import {Contacts} from "./sections/Contacts";
 import {HomeHeader} from "./sections/HomeHeader";
 import {Helmet} from 'react-helmet'
 import {useTranslation} from "react-i18next";
+import Footer from "../../components/Footer";
 
 export const Home: React.FC = () => {
     const { t } = useTranslation();
@@ -16,6 +17,7 @@ export const Home: React.FC = () => {
             <HomeHeader/>
             <AboutUs/>
             <Contacts/>
+            <Footer />
         </>
     )
 }

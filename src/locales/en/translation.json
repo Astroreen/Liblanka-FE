@@ -182,6 +182,8 @@
     "name": "Liblanka",
     "slogan-end": "is your way to creating unique image",
     "create": "Create",
-    "send": "Send"
+    "send": "Send",
+    "footer": "© 2025-{year} UAB Liblanka. All rights reserved.",
+    "footer_icons": "All icons used on this website are sourced from flaticon.com."
   }
 }

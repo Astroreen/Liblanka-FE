@@ -3,7 +3,9 @@
     "name": "Liblanka",
     "slogan-end": "yra jūsų kelias į unikalaus įvaizdžio kūrimą",
     "create": "Sukurti",
-    "send": "Siųsti"
+    "send": "Siųsti",
+    "footer": "© 2025-{year} UAB Liblanka. Visos teisės saugomos.",
+    "footer_icons": "Visos šiame puslapyje naudojamos piktogramos yra paimtos iš flaticon.com."
   },
 
   "page": {
