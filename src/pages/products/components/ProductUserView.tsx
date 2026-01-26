@@ -1,13 +1,10 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { ProductDto } from "../../../dto/ProductDto";
+import { ProductUserViewProps } from "../page/ProductProfile";
 
-export interface ProductUserViewProps {
-    product: ProductDto | null;
-    imageThumbnails: (images: {id: number, url: string}[], controls?: React.ReactNode | null) => React.ReactNode;
-}
 
-const ProductUserView: React.FC<ProductUserViewProps> = ({ imageThumbnails }) => {
+
+const ProductUserView: React.FC<ProductUserViewProps> = ( inputs ) => {
     return (
         <>
             {/* Sidebar Thumbnails */}
