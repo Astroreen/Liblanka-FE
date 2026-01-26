@@ -60,7 +60,6 @@ export const Dashboard: React.FC = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {/* Существующие строки таблицы остаются без изменений */}
                   <tr>
                     <td>1,001</td>
                     <td>random</td>
@@ -68,7 +67,6 @@ export const Dashboard: React.FC = () => {
                     <td>placeholder</td>
                     <td>text</td>
                   </tr>
-                  {/* ... остальные строки опущены для краткости */}
                 </tbody>
               </table>
             </div>
@@ -93,9 +91,7 @@ export const Dashboard: React.FC = () => {
         />
       </Helmet>
 
-      {/* Существующие SVG символы остаются без изменений */}
       <svg xmlns="http://www.w3.org/2000/svg" className="d-none">
-        {/* ... опущено для краткости */}
       </svg>
 
       <div className="container-fluid">

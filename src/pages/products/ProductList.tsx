@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { useTranslation } from "react-i18next";
-import { Helmet } from "react-helmet-async";
 import {
   Box,
-  Container,
-  Typography,
   CircularProgress,
+  Container,
   Pagination,
+  Typography,
 } from "@mui/material";
-import { ProductFilter } from "./components/ProductFilter";
-import { ProductCard } from "./components/ProductCard";
+import Button from "@mui/material/Button";
+import React, { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { ENDPOINTS } from "../../api/apiConfig";
+import LanguageSwitcher from "../../components/languageSwitcher/LanguageSwitcher";
+import { Logo } from "../../components/logo/Logo";
 import { ProductCardDto } from "../../dto/ProductCardDto";
 import { useProtectedAxios } from "../../hooks/useProtectedAxios";
-import { ENDPOINTS } from "../../api/apiConfig";
-import { Logo } from "../../components/logo/Logo";
-import Button from "@mui/material/Button";
-import LanguageSwitcher from "../../components/languageSwitcher/LanguageSwitcher";
-import { useNavigate } from "react-router-dom";
+import { ProductCard } from "./components/ProductCard";
+import { ProductFilter } from "./components/ProductFilter";
 
 interface FilterParams {
   name?: string;
@@ -35,7 +35,7 @@ interface PageResponse<T> {
   number: number;
 }
 
-export const Products: React.FC = () => {
+export const ProductList: React.FC = () => {
   const { t } = useTranslation();
   const protectedAxios = useProtectedAxios();
   const [products, setProducts] = useState<ProductCardDto[]>([]);
@@ -60,7 +60,7 @@ export const Products: React.FC = () => {
 
       const response = await protectedAxios.get<PageResponse<ProductCardDto>>(
         ENDPOINTS.products_filter,
-        { params: encodedParams }
+        { params: encodedParams },
       );
 
       setProducts(response.data.content);
@@ -74,7 +74,7 @@ export const Products: React.FC = () => {
   };
 
   const handleFilterChange = (
-    filterParams: Omit<FilterParams, "page" | "pageSize">
+    filterParams: Omit<FilterParams, "page" | "pageSize">,
   ) => {
     setCurrentFilter(filterParams);
     setCurrentPage(0);
@@ -83,7 +83,7 @@ export const Products: React.FC = () => {
 
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
-    page: number
+    page: number,
   ) => {
     setCurrentPage(page - 1);
     fetchProducts({ ...currentFilter, page: page - 1, pageSize: 20 });
@@ -109,15 +109,17 @@ export const Products: React.FC = () => {
         <ProductFilter onFilterChange={handleFilterChange} />
 
         <Container maxWidth="xl" sx={{ py: 4 }}>
-          <Box sx={{
-            display: 'flex',
-            justifyContent: 'space-evenly',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: 2,
-            width: '100%',
-            mb: 5,
-          }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-evenly",
+              alignItems: "center",
+              flexWrap: "wrap",
+              gap: 2,
+              width: "100%",
+              mb: 5,
+            }}
+          >
             <Button
               onClick={() => (window.location.href = "/")}
               sx={{
@@ -137,13 +139,19 @@ export const Products: React.FC = () => {
                 fontWeight: "bold",
                 letterSpacing: 2,
                 whiteSpace: "nowrap",
-                flex: '1 1 auto',
-                minWidth: 'fit-content',
+                flex: "1 1 auto",
+                minWidth: "fit-content",
               }}
             >
               {t("page.products.our_products")}
             </Typography>
-            <Box sx = {{ minWidth: 173.67, display: "flex", justifyContent: "center" }}>
+            <Box
+              sx={{
+                minWidth: 173.67,
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
               <LanguageSwitcher />
             </Box>
           </Box>
