@@ -2,7 +2,7 @@ import React from "react";
 import {AboutUs} from "./sections/AboutUs";
 import {Contacts} from "./sections/Contacts";
 import {HomeHeader} from "./sections/HomeHeader";
-import {Helmet} from 'react-helmet'
+import {Helmet} from 'react-helmet-async';
 import {useTranslation} from "react-i18next";
 import Footer from "../../components/Footer";
 

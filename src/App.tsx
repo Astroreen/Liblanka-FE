@@ -1,18 +1,17 @@
-import React from 'react';
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {Home} from "./pages/home/Home";
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { AuthProvider } from "./contexts/AuthContext";
 import translationEN from "./locales/en/translation.json";
 import translationLT from "./locales/lt/translation.json";
 import translationRU from "./locales/ru/translation.json";
-import i18n from "i18next";
-import {initReactI18next} from "react-i18next";
-import {RoutePath} from "./routes/RoutePath";
-import {Products} from "./pages/products/Products";
-import {Login} from "./pages/login/Login";
-import {AuthProvider} from "./contexts/AuthContext";
-import ProtectedRoute from "./routes/ProtectedRoute";
-import {Dashboard} from "./pages/admin/Dashboard";
+import { Dashboard } from "./pages/admin/Dashboard";
+import { Home } from "./pages/home/Home";
+import { Login } from "./pages/login/Login";
 import ProductProfile from "./pages/products/page/ProductProfile";
+import { Products } from "./pages/products/Products";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import { RoutePath } from "./routes/RoutePath";
 
 const resources = {
     en: {

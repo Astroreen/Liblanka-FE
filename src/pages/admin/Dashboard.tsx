@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { Menu, MenuItem } from "@mui/material";
 import ProductCreation from "./product/page/ProductCreation";
 import ProductInformationManager from "./product/page/ProductInformationManager";

@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import "./AuthForm.css";
-import {Helmet} from "react-helmet";
+import {Helmet} from "react-helmet-async";
 import {useTranslation} from "react-i18next";
 import {Button, TextField} from "@mui/material";
 
