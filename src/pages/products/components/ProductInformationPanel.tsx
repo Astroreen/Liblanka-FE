@@ -52,6 +52,7 @@ export interface ProductPanelInfoProps {
     onFormPropsChange: (field: keyof ProductForm, value: any) => void;
     handleColorSelect: (colorId: number) => void;
     handleSaveChanges: () => Promise<void>;
+    onCancelEdit?: () => void;
 }
 
 const ProductPanelInfo: React.FC<ProductPanelInfoProps> = (inputs) => {
@@ -93,7 +94,9 @@ const ProductPanelInfo: React.FC<ProductPanelInfoProps> = (inputs) => {
     ///////////////
 
     const handleChangeEditView = (editMode: boolean) => {
-        navigate("/products/" + product.id);
+        if (!editMode && inputs.onCancelEdit) {
+            inputs.onCancelEdit();
+        }
     };
 
     const handleSizeSelect = (sizeId: number) => {
