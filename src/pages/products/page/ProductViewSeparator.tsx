@@ -76,7 +76,7 @@ const ProductViewSeparator: React.FC = () => {
     const [existingImageMap, setExistingImageMap] = useState<Record<string, string>>({}); // Map of imageId to Blob URL
     const [selectedImageKey, setSelectedImageKey] = useState<string>("existing-image-0");
     const [product, setProduct] = useState<ProductDto | null>(null);
-    const [selectedColorId, setSelectedColorId] = useState<number | null>(null);
+    const [selectedColorId, setSelectedColorId] = useState<number | null>(-1);
     const [isProductImageColorBound, setIsProductImageColorBound] = useState<boolean>(false);
     const [editMode, setEditMode] = useState(false);
 
@@ -162,10 +162,55 @@ const ProductViewSeparator: React.FC = () => {
     // Functions //
     ///////////////
 
-    // TODO: More work on this function. Such as image filtering based on selected color
     const handleColorSelect = (colorId: number) => {
         setSelectedColorId(colorId);
     };
+
+    useEffect(() => {
+        if (product?.images) {
+            let filtered = product.images;
+            if (selectedColorId !== -1) {
+                filtered = filtered.filter(img => img.colorId === selectedColorId);
+            }
+            if (filtered.length > 0) {
+                setSelectedImageKey(`existing-image-${filtered[0].imageId}`);
+            } else {
+                setSelectedImageKey("");
+            }
+        }
+    }, [selectedColorId, product]);
+
+    const processedProduct = React.useMemo(() => {
+        if (!product) return null;
+        
+        const noneColor: ProductColorDto = {
+            id: -1,
+            name: "None",
+            hex: 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'46\' fill=\'none\' stroke=\'red\' stroke-width=\'8\'/><line x1=\'18\' y1=\'82\' x2=\'82\' y2=\'18\' stroke=\'red\' stroke-width=\'8\'/></svg>") center/cover no-repeat'
+        };
+
+        const colorsWithNone = product.colors ? [noneColor, ...product.colors] : [noneColor];
+        
+        let filteredImages = product.images || [];
+        if (selectedColorId !== -1) {
+            filteredImages = filteredImages.filter(img => img.colorId === selectedColorId);
+        }
+
+        return {
+            ...product,
+            colors: colorsWithNone,
+            images: filteredImages
+        };
+    }, [product, selectedColorId]);
+
+    const processedAllColors = React.useMemo(() => {
+        const noneColor: ProductColorDto = {
+            id: -1,
+            name: "None",
+            hex: 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'46\' fill=\'none\' stroke=\'red\' stroke-width=\'8\'/><line x1=\'18\' y1=\'82\' x2=\'82\' y2=\'18\' stroke=\'red\' stroke-width=\'8\'/></svg>") center/cover no-repeat'
+        };
+        return [noneColor, ...allColors];
+    }, [allColors]);
 
     ///////////
     // Nodes //
@@ -267,9 +312,9 @@ const ProductViewSeparator: React.FC = () => {
             {!loading && isAdmin && areImagesProcessed && editMode ? (
                 <ProductAdminView
                     allTypes={allTypes}
-                    allColors={allColors}
+                    allColors={processedAllColors}
                     allSizes={allSizes}
-                    product={product}
+                    product={processedProduct}
                     existingImageMap={existingImageMap}
                     selectedColorId={selectedColorId}
                     imageThumbnail={imageThumbnail}
@@ -288,7 +333,7 @@ const ProductViewSeparator: React.FC = () => {
                 !loading &&
                 areImagesProcessed && (
                     <ProductUserView
-                        product={product}
+                        product={processedProduct}
                         isAdmin={isAdmin}
                         onEdit={() => setEditMode(true)}
                         existingImageMap={existingImageMap}
